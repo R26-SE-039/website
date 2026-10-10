@@ -25,8 +25,8 @@ const icons: Record<string, LucideIcon> = {
 
 /*
   Hub layout from lg up: the gap summary sits in the middle column (spanning two
-  rows) and the five threads surround it (left, right, left, right, below), each
-  with a short connector towards the hub. Below lg it collapses to the hub card
+  rows) and the five threads surround it (left, right, left, right, and a
+  full-width horizontal card below), each with a short connector towards the hub. Below lg it collapses to the hub card
   followed by a one- or two-column stack.
 */
 const placement = [
@@ -34,7 +34,7 @@ const placement = [
   { cell: "lg:col-start-3 lg:row-start-1", side: "left" },
   { cell: "lg:col-start-1 lg:row-start-2", side: "right" },
   { cell: "lg:col-start-3 lg:row-start-2", side: "left" },
-  { cell: "sm:col-span-2 lg:col-span-1 lg:col-start-2 lg:row-start-3", side: "top" },
+  { cell: "sm:col-span-2 lg:col-span-3 lg:col-start-1 lg:row-start-3", side: "top", wide: true },
 ] as const;
 
 const connector = {
@@ -96,12 +96,14 @@ export default function LiteratureSurvey() {
           {literature.map((theme, i) => {
             const Icon = icons[theme.id] ?? BookOpen;
             const place = placement[i] ?? placement[0];
+            const wide = "wide" in place && place.wide;
             return (
               <article
                 key={theme.id}
                 style={{ "--d": i + 1 } as CSSProperties}
                 className={cn(
                   "scroll-reveal group relative flex flex-col rounded-[24px] border border-line bg-white p-6 hover:border-brand/70 hover:shadow-[0_22px_48px_-28px_rgba(14,24,42,0.4)] md:p-7 motion-safe:transition-[translate,box-shadow,border-color] motion-safe:duration-300 lg:motion-safe:hover:-translate-y-1.5",
+                  wide && "lg:grid lg:grid-cols-12 lg:gap-x-10 lg:p-8",
                   place.cell,
                 )}
               >
@@ -112,46 +114,50 @@ export default function LiteratureSurvey() {
                     connector[place.side],
                   )}
                 />
-                <div className="flex items-center justify-between">
-                  <span className="grid size-11 place-items-center rounded-xl border border-line bg-surface text-ink motion-safe:transition-colors motion-safe:duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-ink">
-                    <Icon size={20} aria-hidden="true" />
-                  </span>
-                  <span className="flex items-center gap-2">
-                    {theme.components.map((c) => (
-                      <span
-                        key={c}
-                        className="rounded-full bg-navy px-2.5 py-0.5 font-mono text-[11px] font-semibold text-white"
-                        title={`Answered by Component ${c}`}
-                      >
-                        C{c}
-                      </span>
-                    ))}
-                    <span className="font-mono text-xs text-muted">0{i + 1}</span>
-                  </span>
+                <div className={cn(wide && "lg:col-span-5")}>
+                  <div className="flex items-center justify-between">
+                    <span className="grid size-11 place-items-center rounded-xl border border-line bg-surface text-ink motion-safe:transition-colors motion-safe:duration-300 group-hover:border-brand group-hover:bg-brand group-hover:text-brand-ink">
+                      <Icon size={20} aria-hidden="true" />
+                    </span>
+                    <span className="flex items-center gap-2">
+                      {theme.components.map((c) => (
+                        <span
+                          key={c}
+                          className="rounded-full bg-navy px-2.5 py-0.5 font-mono text-[11px] font-semibold text-white"
+                          title={`Answered by Component ${c}`}
+                        >
+                          C{c}
+                        </span>
+                      ))}
+                      <span className="font-mono text-xs text-muted">0{i + 1}</span>
+                    </span>
+                  </div>
+
+                  <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{theme.title}</h3>
+                  <p className="mt-3 text-[15px] leading-relaxed text-muted">{theme.summary}</p>
                 </div>
 
-                <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{theme.title}</h3>
-                <p className="mt-3 text-[15px] leading-relaxed text-muted">{theme.summary}</p>
+                <div className={cn("mt-5 flex flex-1 flex-col", wide && "lg:col-span-7 lg:mt-0")}>
+                  <div className={cn("rounded-r-2xl border-l-2 border-brand bg-surface px-4 py-3.5", !wide && "flex-1")}>
+                    <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink">
+                      Where it stops
+                    </p>
+                    <p className="mt-1.5 text-sm leading-relaxed text-muted">{theme.gap}</p>
+                  </div>
 
-                <div className="mt-5 flex-1 rounded-r-2xl border-l-2 border-brand bg-surface px-4 py-3.5">
-                  <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink">
-                    Where it stops
-                  </p>
-                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{theme.gap}</p>
+                  {theme.references.length > 0 && (
+                    <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Key references">
+                      {theme.references.map((r) => (
+                        <li
+                          key={r}
+                          className="rounded-full border border-line bg-white px-2.5 py-1 font-mono text-[11px] text-muted"
+                        >
+                          {r}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </div>
-
-                {theme.references.length > 0 && (
-                  <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Key references">
-                    {theme.references.map((r) => (
-                      <li
-                        key={r}
-                        className="rounded-full border border-line bg-white px-2.5 py-1 font-mono text-[11px] text-muted"
-                      >
-                        {r}
-                      </li>
-                    ))}
-                  </ul>
-                )}
               </article>
             );
           })}
