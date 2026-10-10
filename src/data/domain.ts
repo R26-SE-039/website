@@ -71,21 +71,34 @@ export const gaps = [
 ];
 
 export const researchProblem = {
-  main: "TODO: main research problem of the whole project (team to provide).",
+  main:
+    "Software quality assurance spans requirement elicitation, test design, execution, defect analysis, traceability and coverage, yet these activities are supported by disconnected tools and manual hand-offs. How can AI connect requirements captured in live meetings to executable tests, execution evidence, failure analysis, governed repair, traceability and coverage in one human-governed workflow?",
   perComponent: [
-    { no: 1 as const, question: "TODO: Component 1 research question." },
+    {
+      no: 1 as const,
+      question:
+        "Can requirement-bearing utterances be reliably extracted, threaded and conflict-checked from live meeting conversations to produce validated and traceable user stories?",
+    },
     {
       no: 2 as const,
       question:
         "How can executable UI test suites be generated automatically from Agile user stories such that they are grounded in the real application, discoverable beyond what the stories state, and independently validated before execution, within a closed CI/CD loop?",
     },
-    { no: 3 as const, question: "TODO: Component 3 research question." },
-    { no: 4 as const, question: "TODO: Component 4 research question." },
+    {
+      no: 3 as const,
+      question:
+        "Can CI/CD test failures be accurately classified and safely handled through deterministic self-healing while preventing unauthorised repository modifications?",
+    },
+    {
+      no: 4 as const,
+      question:
+        "Can test quality, requirements traceability, gap analysis and code coverage be maintained using evidence from actual test execution?",
+    },
   ],
 };
 
 export const mainObjective =
-  "TODO: main objective of the whole project (team to provide). Draft: to design, implement and evaluate an AI-powered closed-loop platform that takes a requirement from a sprint conversation to a validated, self-healing, traceable automated test.";
+  "To design, implement and evaluate an AI-driven, human-governed framework for end-to-end software testing lifecycle automation that takes a requirement from a live sprint conversation to a validated, executable, traceable test suite, with controlled, developer-approved self-healing when pipelines break.";
 
 export const methodology = {
   name: "Design Science Research",
@@ -105,7 +118,17 @@ export const technologies: TechCategory[] = [
   { category: "AI / ML", items: [{ name: "OpenAI" }, { name: "Anthropic Claude" }, { name: "Google Gemini" }, { name: "Ollama" }, { name: "scikit-learn" }] },
   { category: "Testing", items: [{ name: "Playwright" }, { name: "Selenium" }, { name: "Cypress" }, { name: "pytest" }] },
   { category: "DevOps & Cloud", items: [{ name: "Docker" }, { name: "Caddy" }, { name: "AWS EC2" }, { name: "GitHub Actions" }, { name: "Vercel" }] },
-  { category: "TODO: other components", items: [{ name: "TODO: add technologies of C1, C3, C4" }] },
+  {
+    category: "Speech, retrieval & coverage",
+    items: [
+      { name: "Azure Speech SDK" },
+      { name: "ModernBERT" },
+      { name: "pgvector" },
+      { name: "RandomForest" },
+      { name: "nyc / Istanbul" },
+      { name: "coverage.py" },
+    ],
+  },
 ];
 
 export const literatureInsight = {
@@ -120,5 +143,5 @@ export const problemNarrative = [
 
 export const solutionNarrative = [
   "NextGen QA treats the whole path as one closed loop. Component 1 listens to the sprint meeting and produces structured user stories. Component 2 turns those stories into Gherkin scenarios and executable Playwright, Selenium and Cypress suites grounded in the real DOM, explores the application with a vision-guided agent, validates every generated artefact with static checks and an independent LLM judge, and runs the suites in CI/CD.",
-  "Component 3 classifies the failures that come back and heals broken locators, proposing repairs through GitHub. Component 4 keeps a live requirements traceability matrix and predicts quality from the signals the other components emit. Results flow back to the start, so the next sprint begins with evidence rather than assumptions.",
+  "Component 3 classifies the failures that come back into nine root causes and, for genuine application defects, proposes a repair that a developer must approve before it lands on an isolated auto-heal branch as a draft pull request. Component 4 keeps a live requirements traceability matrix from executed tests, scoring test quality, coverage gaps and risk. Results flow back to the start, so the next sprint begins with evidence rather than assumptions.",
 ];

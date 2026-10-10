@@ -142,6 +142,44 @@ h3 {
         transform: translateY(0);
       }
     }
+
+    /* Scroll reveal: fades and rises as it enters the viewport. Set --d (0, 1, 2…)
+       on siblings to stagger them. Uses `transform`, so Tailwind's `translate`
+       hover lift still composes on top. */
+    .scroll-reveal {
+      animation: scroll-reveal linear both;
+      animation-timeline: view();
+      animation-range: cover calc(var(--d, 0) * 4%) cover calc(28% + var(--d, 0) * 4%);
+    }
+    @keyframes scroll-reveal {
+      from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.97);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    /* Inside a horizontal carousel (below md): reveal along the swipe axis instead. */
+    @media (max-width: 47.99rem) {
+      .scroll-reveal-x {
+        animation-name: scroll-reveal-x;
+        animation-timeline: view(inline);
+        animation-range: entry 0% entry 90%;
+      }
+      @keyframes scroll-reveal-x {
+        from {
+          opacity: 0.35;
+          transform: translateX(48px) scale(0.94);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    }
   }
 }
 

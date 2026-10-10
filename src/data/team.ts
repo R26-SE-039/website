@@ -2,37 +2,37 @@ import type { Member } from "@/types/content";
 
 export const team: Member[] = [
   {
-    name: "TODO: member name",
-    studentId: "TODO",
+    name: "Jinad Induvidwa A.G.",
+    studentId: "IT22251114",
     component: 1,
-    email: "TODO@my.sliit.lk",
+    email: "it22251114@my.sliit.lk",
     photo: "/images/team/placeholder.svg",
   },
   {
     name: "Abeygunasekara D.T.",
     studentId: "IT22303684",
     component: 2,
-    email: "TODO: email",
+    email: "it22303684@my.sliit.lk",
     photo: "/images/team/IT22303684.webp",
     achievements: [],
   },
   {
-    name: "TODO: member name",
-    studentId: "TODO",
+    name: "Ranasinghe S.I.",
+    studentId: "IT22371768",
     component: 3,
-    email: "TODO@my.sliit.lk",
+    email: "it22371768@my.sliit.lk",
     photo: "/images/team/placeholder.svg",
   },
   {
-    name: "TODO: member name",
-    studentId: "TODO",
+    name: "Rashani K.G.M.",
+    studentId: "IT22182678",
     component: 4,
-    email: "TODO@my.sliit.lk",
+    email: "it22182678@my.sliit.lk",
     photo: "/images/team/placeholder.svg",
   },
 ];
 
 export const supervisors = [
-  { role: "Supervisor", name: "Ms. Suriyaa Kumari", email: "TODO: email" },
-  { role: "Co-Supervisor", name: "Mr. Eishan Weerasinghe", email: "TODO: email" },
+  { role: "Supervisor", name: "Ms. Suriyaa Kumari", email: "suriyaa.k@sliit.lk" },
+  { role: "Co-Supervisor", name: "Mr. Eishan Weerasinghe", email: "eishan.w@sliit.lk" },
 ];

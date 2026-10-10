@@ -22,11 +22,13 @@ export default function LoopDiagram() {
   return (
     <section className="bg-white py-24 md:py-32">
       <Container>
-        <SectionHeading
-          eyebrow="The closed loop"
-          title="From a spoken requirement to a traceable, self-healing test."
-          description="Each stage hands structured data to the next, and the results flow back to the start so the loop keeps improving."
-        />
+        <div className="scroll-reveal">
+          <SectionHeading
+            eyebrow="The closed loop"
+            title="From a spoken requirement to a traceable, self-healing test."
+            description="Each stage hands structured data to the next, and the results flow back to the start so the loop keeps improving."
+          />
+        </div>
         <ol
           className="mt-14 flex flex-col gap-4 md:grid md:grid-cols-3 lg:grid-cols-6"
           aria-label="Pipeline stages"
@@ -36,8 +38,8 @@ export default function LoopDiagram() {
             return (
               <li
                 key={n.label}
-                style={{ "--stack-top": `${5 + i * 0.75}rem` } as CSSProperties}
-                className="group relative flex min-h-44 flex-col overflow-hidden rounded-2xl border border-line bg-surface p-5 shadow-[0_-8px_24px_-12px_rgba(14,24,42,0.18)] max-md:sticky max-md:top-(--stack-top) md:min-h-0 md:shadow-none motion-safe:transition-[transform,box-shadow,border-color] motion-safe:duration-300 hover:border-brand/60 hover:shadow-[0_18px_40px_-20px_rgba(14,24,42,0.35)] md:motion-safe:hover:-translate-y-1.5"
+                style={{ "--stack-top": `${5 + i * 0.75}rem`, "--d": i } as CSSProperties}
+                className="scroll-reveal group relative flex min-h-44 flex-col overflow-hidden rounded-2xl border border-line bg-surface p-5 shadow-[0_-8px_24px_-12px_rgba(14,24,42,0.18)] max-md:sticky max-md:top-(--stack-top) md:min-h-0 md:shadow-none motion-safe:transition-[translate,box-shadow,border-color] motion-safe:duration-300 hover:border-brand/60 hover:shadow-[0_18px_40px_-20px_rgba(14,24,42,0.35)] md:motion-safe:hover:-translate-y-1.5"
               >
                 <span
                   aria-hidden="true"
@@ -61,7 +63,7 @@ export default function LoopDiagram() {
             );
           })}
         </ol>
-        <p className="mt-6 flex items-center gap-2 text-sm text-muted">
+        <p className="scroll-reveal mt-6 flex items-center gap-2 text-sm text-muted">
           <span aria-hidden="true" className="inline-block h-0.5 w-8 rounded-full bg-brand" />
           Execution results return to story generation and traceability, closing the loop.
         </p>
