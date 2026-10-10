@@ -7,6 +7,11 @@ import { useEffect, useRef } from "react";
  * closely spaced vertical lines whose points drift with 3-D Perlin noise and
  * are pushed by the pointer with a spring, so the field bends and settles
  * around the cursor. Plain canvas, no dependency.
+ *
+ * CPU budget: the field is STATIC until the pointer moves. A frame loop runs
+ * only while the pointer is active and for a short settle afterwards, then
+ * stops completely. Canvas is drawn at device pixel ratio 1, the cursor force
+ * is applied only to lines near the pointer, and points at rest skip physics.
  */
 
 // ── compact classic Perlin noise (3-D) ───────────────────────────────────────
@@ -66,10 +71,13 @@ type Props = {
   cursorMax?: number;
 };
 
+const REST = 0.05; // below this displacement/velocity a point is considered at rest
+const SETTLE_MS = 1500; // keep animating this long after the last pointer move
+
 export default function WaveField({
   lineColor = "rgba(14, 24, 42, 0.09)",
-  xGap = 12,
-  yGap = 32,
+  xGap = 14,
+  yGap = 34,
   ampX = 32,
   ampY = 16,
   speed = 0.012,
@@ -86,25 +94,24 @@ export default function WaveField({
     const host = canvas.parentElement ?? canvas;
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
     let width = 0;
     let height = 0;
     let lines: Point[][] = [];
     let raf = 0;
     let visible = true;
     let t = 0;
+    let lastMove = -1e9;
 
-    const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, v: 0, vs: 0, a: 0, set: false };
+    const mouse = { x: -10, y: 0, lx: 0, ly: 0, sx: 0, sy: 0, vs: 0, a: 0, set: false };
 
     const build = () => {
       const rect = host.getBoundingClientRect();
       width = Math.max(1, Math.floor(rect.width));
       height = Math.max(1, Math.floor(rect.height));
-      canvas.width = Math.floor(width * dpr);
-      canvas.height = Math.floor(height * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      canvas.width = width; // DPR 1: hairlines do not need more and it quarters the fill cost
+      canvas.height = height;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       lines = [];
-      // One line per column, points running top to bottom.
       const cols = Math.ceil(width / xGap) + 2;
       const rows = Math.ceil(height / yGap) + 2;
       for (let c = 0; c < cols; c++) {
@@ -114,35 +121,55 @@ export default function WaveField({
         }
         lines.push(pts);
       }
+      applyNoise();
     };
 
-    const move = () => {
+    const applyNoise = () => {
       for (const pts of lines) {
         for (const p of pts) {
           const n = noise3(p.x * 0.002, p.y * 0.0015, t) * 12;
           p.wx = Math.cos(n) * ampX;
           p.wy = Math.sin(n) * ampY;
-
-          const dx = p.x - mouse.sx;
-          const dy = p.y - mouse.sy;
-          const d = Math.hypot(dx, dy);
-          const l = Math.max(cursorRadius, mouse.vs);
-          if (d < l) {
-            const s = 1 - d / l;
-            const f = Math.cos(d * 0.001) * s;
-            p.vx += Math.cos(mouse.a) * f * l * mouse.vs * 0.00065;
-            p.vy += Math.sin(mouse.a) * f * l * mouse.vs * 0.00065;
-          }
-          p.vx += (0 - p.cx) * 0.005; // tension
-          p.vy += (0 - p.cy) * 0.005;
-          p.vx *= 0.925; // friction
-          p.vy *= 0.925;
-          p.cx += p.vx * 2;
-          p.cy += p.vy * 2;
-          p.cx = Math.max(-cursorMax, Math.min(cursorMax, p.cx));
-          p.cy = Math.max(-cursorMax, Math.min(cursorMax, p.cy));
         }
       }
+    };
+
+    /** Cursor force (only lines near the pointer) + spring relaxation (only points not at rest). Returns true while anything is still moving. */
+    const physics = (): boolean => {
+      const l = Math.max(cursorRadius, mouse.vs);
+      const reach = l + cursorMax;
+      const fx = Math.cos(mouse.a) * l * mouse.vs * 0.00065;
+      const fy = Math.sin(mouse.a) * l * mouse.vs * 0.00065;
+      let active = false;
+      for (const pts of lines) {
+        const lineX = pts[0].x;
+        const nearLine = Math.abs(lineX - mouse.sx) < reach;
+        for (const p of pts) {
+          if (nearLine && mouse.vs > 0.2) {
+            const dx = p.x - mouse.sx;
+            const dy = p.y - mouse.sy;
+            const d = Math.hypot(dx, dy);
+            if (d < l) {
+              const s = 1 - d / l;
+              const f = Math.cos(d * 0.001) * s;
+              p.vx += fx * f;
+              p.vy += fy * f;
+            }
+          }
+          if (Math.abs(p.cx) < REST && Math.abs(p.cy) < REST && Math.abs(p.vx) < REST && Math.abs(p.vy) < REST) {
+            p.cx = p.cy = p.vx = p.vy = 0;
+            continue;
+          }
+          p.vx += -p.cx * 0.005; // tension
+          p.vy += -p.cy * 0.005;
+          p.vx *= 0.925; // friction
+          p.vy *= 0.925;
+          p.cx = Math.max(-cursorMax, Math.min(cursorMax, p.cx + p.vx * 2));
+          p.cy = Math.max(-cursorMax, Math.min(cursorMax, p.cy + p.vy * 2));
+          active = true;
+        }
+      }
+      return active;
     };
 
     const draw = () => {
@@ -151,44 +178,43 @@ export default function WaveField({
       ctx.lineWidth = 1;
       ctx.beginPath();
       for (const pts of lines) {
-        let first = true;
-        for (let i = 0; i < pts.length; i++) {
+        let qx = pts[0].x + pts[0].wx + pts[0].cx;
+        let qy = pts[0].y + pts[0].wy + pts[0].cy;
+        ctx.moveTo(qx, qy);
+        for (let i = 1; i < pts.length; i++) {
           const p = pts[i];
           const x = p.x + p.wx + p.cx;
           const y = p.y + p.wy + p.cy;
-          if (first) {
-            ctx.moveTo(x, y);
-            first = false;
-          } else {
-            // smooth through the midpoint for a soft curve
-            const q = pts[i - 1];
-            const qx = q.x + q.wx + q.cx;
-            const qy = q.y + q.wy + q.cy;
-            ctx.quadraticCurveTo(qx, qy, (qx + x) / 2, (qy + y) / 2);
-          }
+          ctx.quadraticCurveTo(qx, qy, (qx + x) / 2, (qy + y) / 2); // soft curve through midpoints
+          qx = x;
+          qy = y;
         }
       }
       ctx.stroke();
     };
 
     const tick = () => {
+      raf = 0;
       if (!visible) return;
       t += speed;
-      // ease the smoothed cursor towards the real one and derive its speed and angle
       mouse.sx += (mouse.x - mouse.sx) * 0.1;
       mouse.sy += (mouse.y - mouse.sy) * 0.1;
       const dx = mouse.x - mouse.lx;
       const dy = mouse.y - mouse.ly;
       const d = Math.hypot(dx, dy);
-      mouse.v = d;
-      mouse.vs += (d - mouse.vs) * 0.1;
-      mouse.vs = Math.min(100, mouse.vs);
+      mouse.vs = Math.min(100, mouse.vs + (d - mouse.vs) * 0.1);
       mouse.lx = mouse.x;
       mouse.ly = mouse.y;
-      mouse.a = Math.atan2(dy, dx);
-      move();
+      if (d > 0.01) mouse.a = Math.atan2(dy, dx);
+      applyNoise();
+      const settling = physics();
       draw();
-      raf = requestAnimationFrame(tick);
+      const recent = performance.now() - lastMove < SETTLE_MS;
+      if (recent || settling) raf = requestAnimationFrame(tick);
+    };
+
+    const wake = () => {
+      if (!raf && visible) raf = requestAnimationFrame(tick);
     };
 
     const onMove = (e: PointerEvent) => {
@@ -202,34 +228,35 @@ export default function WaveField({
         mouse.ly = mouse.y;
         mouse.set = true;
       }
+      lastMove = performance.now();
+      wake();
+    };
+
+    const onResize = () => {
+      build();
+      draw();
     };
 
     build();
-    if (reduced) {
-      move();
-      draw();
-      window.addEventListener("resize", build);
-      return () => window.removeEventListener("resize", build);
-    }
+    draw(); // static frame; nothing runs until the pointer moves
+    window.addEventListener("resize", onResize);
+    if (reduced) return () => window.removeEventListener("resize", onResize);
 
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting;
-      if (visible && !raf) raf = requestAnimationFrame(tick);
-      if (!visible) {
+      if (!visible && raf) {
         cancelAnimationFrame(raf);
         raf = 0;
       }
     });
     io.observe(host);
     host.addEventListener("pointermove", onMove, { passive: true });
-    window.addEventListener("resize", build);
-    raf = requestAnimationFrame(tick);
 
     return () => {
       cancelAnimationFrame(raf);
       io.disconnect();
       host.removeEventListener("pointermove", onMove);
-      window.removeEventListener("resize", build);
+      window.removeEventListener("resize", onResize);
     };
   }, [lineColor, xGap, yGap, ampX, ampY, speed, cursorRadius, cursorMax]);
 
