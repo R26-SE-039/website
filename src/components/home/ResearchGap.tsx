@@ -1,3 +1,4 @@
+import type { CSSProperties } from "react";
 import { Check, Compass, Minus, ScanSearch, ShieldOff, TrendingDown, X } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
@@ -5,6 +6,7 @@ import { gapColumns, gapRows, gaps } from "@/data/domain";
 import type { GapMark } from "@/types/content";
 
 const icons = [ScanSearch, Compass, ShieldOff, TrendingDown];
+
 
 function Mark({ value }: { value: GapMark }) {
   if (value === "yes")
@@ -39,14 +41,25 @@ export default function ResearchGap() {
         <ol className="mt-14 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
           {gaps.map((gap, i) => {
             const Icon = icons[i % icons.length];
-            const [title, rest] = gap.split(": ");
+            const [title, rest = ""] = gap.split(": ");
             return (
-              <li key={gap} className="rounded-[24px] bg-white p-7">
-                <span aria-hidden="true" className="grid h-12 w-12 place-items-center rounded-2xl bg-brand/15 text-ink">
+              <li
+                key={gap}
+                style={{ "--d": i } as CSSProperties}
+                className="scroll-reveal group rounded-[24px] bg-white p-7"
+              >
+                <span
+                  aria-hidden="true"
+                  className="grid h-12 w-12 place-items-center rounded-2xl bg-brand/15 text-ink motion-safe:transition-[background-color,color,rotate,scale] motion-safe:duration-300 group-hover:bg-navy group-hover:text-brand motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-6"
+                >
                   <Icon size={22} />
                 </span>
-                <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{title}</h3>
-                <p className="mt-2 text-[15px] leading-relaxed text-muted">{rest}</p>
+                <h3 className="mt-5 text-lg font-bold leading-snug text-ink">
+                  {title}
+                </h3>
+                <p className="mt-2 text-[15px] leading-relaxed text-muted">
+                  {rest.charAt(0).toUpperCase() + rest.slice(1)}
+                </p>
               </li>
             );
           })}
