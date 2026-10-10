@@ -43,8 +43,8 @@ export default function Hero() {
             {site.heroDescription}
           </p>
           <div className="reveal-fade reveal-d3 mt-9 flex flex-wrap justify-center gap-3.5">
-            <ButtonLink href="/domain/">Explore the research</ButtonLink>
-            <ButtonLink href="/documents/" variant="secondary">
+            <ButtonLink href="/#literature-survey">Explore the research</ButtonLink>
+            <ButtonLink href="/#documents" variant="secondary">
               View documents <ArrowRight size={16} aria-hidden="true" />
             </ButtonLink>
           </div>

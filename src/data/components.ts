@@ -4,10 +4,11 @@ export const researchComponents: ResearchComponent[] = [
   {
     no: 1,
     title: "Meeting-to-Story Conversion",
-    member: "TODO: member name",
-    summary: "Converts meeting speech into structured, prioritised user stories.",
+    member: "Jinad Induvidwa A.G. (IT22251114)",
+    summary:
+      "Turns live sprint-meeting speech into validated, evidence-linked user stories, with conflict detection and human review.",
     objective:
-      "TODO: Component 1 objective (team to provide). Draft: convert sprint-meeting speech and transcripts into structured user stories with a classifier that filters requirement-bearing utterances.",
+      "Transcribe live multi-speaker meetings in real time, classify each utterance in context with a fine-tuned ModernBERT model, thread related requirements and detect five types of conflict for Business Analyst resolution, then generate user stories with RAG and score them through rule, evidence, hallucination and INVEST validation before approval.",
   },
   {
     no: 2,
@@ -21,18 +22,19 @@ export const researchComponents: ResearchComponent[] = [
   {
     no: 3,
     title: "Failure Analysis and Self-Healing",
-    member: "TODO: member name",
-    summary: "Classifies test failures and repairs broken locators automatically.",
+    member: "Ranasinghe S.I. (IT22371768)",
+    summary:
+      "Classifies CI/CD test failures into nine root causes and applies developer-approved, safety-governed repairs.",
     objective:
-      "TODO: Component 3 objective (team to provide). Draft: classify failures into a root-cause taxonomy and self-heal locators or propose code fixes through GitHub.",
+      "Predict the root cause of each failed CI/CD execution with a nine-class machine-learning classifier, map it to a recovery action through a deterministic policy, and repair eligible application defects in two phases: a read-only proposal, then a developer-approved change on an isolated auto-heal branch with a draft pull request, never touching the main branch or auto-merging.",
   },
   {
     no: 4,
     title: "Traceability and Quality Prediction",
-    member: "TODO: member name",
+    member: "Rashani K.G.M. (IT22182678)",
     summary:
-      "Maintains a live requirements traceability matrix and predicts quality.",
+      "Keeps a live requirements traceability matrix from executed tests, scoring test quality, coverage gaps and risk.",
     objective:
-      "TODO: Component 4 objective (team to provide). Draft: produce a live requirements traceability matrix and coverage and quality signals across Components 1 and 2.",
+      "Maintain a live requirements traceability matrix updated from test approval, execution and coverage events, score each test on five weighted quality characteristics cross-checked by a RandomForest model, detect coverage gaps from real repository execution, rank them by an explainable risk score, and recommend reviewable test improvements back to test generation.",
   },
 ];

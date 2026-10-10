@@ -16,6 +16,8 @@ export const site = {
     poster: "", // optional: /images/dashboard-poster.webp (1280x720, <= 80 KB)
     caption: "NextGen QA dashboard — story to validated test",
   },
+  // Product introduction video (YouTube). Set the 11-character id to show it; empty = "coming soon".
+  introVideo: { youtubeId: "", title: "Product introduction — NextGen QA" },
   year: 2026,
   institution: "Sri Lanka Institute of Information Technology (SLIIT)",
   faculty: "Faculty of Computing",
@@ -37,27 +39,27 @@ export const site = {
     apiDocs: "https://nextgenqasliit.duckdns.org/testcase-docs/docs",
     github: "https://github.com/R26-SE-039",
   },
-  // Facts only. Add a highlight only when it is true today.
+  // One headline result per component, from the research paper (docs/Research_Paper_New (2).pdf, §IV).
   highlights: [
     {
-      label: "Integrated components",
-      value: "4",
-      note: "Story generation, test generation, self-healing, traceability",
+      label: "User story generation",
+      value: "0.94",
+      note: "Macro-F1 on nine-class utterance classification; conflict detection 0.91 / 0.88 P/R",
     },
     {
-      label: "Test frameworks generated",
-      value: "3",
-      note: "Playwright, Selenium and Cypress from one Gherkin source",
+      label: "Test case generation",
+      value: "91.2%",
+      note: "Executability with DOM grounding, vs 78.6% ungrounded; 93.5% selector accuracy",
     },
     {
-      label: "Deployment",
-      value: "AWS",
-      note: "Docker Compose behind Caddy with automatic HTTPS",
+      label: "Self-healing",
+      value: "0.89",
+      note: "Macro-F1 on nine-class root-cause classification over 180 CI failure runs; 100% safety-policy compliance",
     },
     {
-      label: "Validation",
-      value: "Independent",
-      note: "Static checks plus an LLM judge on a different model",
+      label: "Traceability (RTM)",
+      value: "98.7%",
+      note: "RTM status correctness with 143 ms update latency",
     },
   ],
 } as const;

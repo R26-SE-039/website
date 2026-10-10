@@ -15,11 +15,20 @@ export interface Member {
   studentId: string;
   component: ComponentNo;
   email: string;
-  photo: string; // path under public/, used through asset()
+  photo?: string; // path under public/, used through asset(); omitted → initials avatar
   phone?: string;
   github?: string;
   linkedin?: string;
   achievements?: string[];
+}
+
+export interface Supervisor {
+  role: "Supervisor" | "Co-Supervisor";
+  name: string;
+  email: string;
+  photo?: string; // path under public/; omitted → initials avatar
+  linkedin?: string;
+  scholar?: string; // Google Scholar profile URL
 }
 
 export interface Milestone {
@@ -41,6 +50,7 @@ export interface DocumentItem {
   format: "PDF" | "DOCX" | "Link";
   status: DocStatus;
   href?: string; // required when available
+  date?: string; // submission date, e.g. "2026-03-25"
   description?: string;
 }
 
@@ -68,6 +78,8 @@ export interface LiteratureTheme {
   id: string;
   title: string;
   summary: string;
+  gap: string; // where this line of work stops
+  components: ComponentNo[]; // which NextGen QA components answer the gap
   references: string[];
 }
 
@@ -80,7 +92,8 @@ export interface GapRow {
 
 export interface TechItem {
   name: string;
-  logo?: string; // SVG path under public/logos
+  use?: string; // what it does in NextGen QA
+  icon?: string; // key of brandIcons in src/data/brandIcons.ts
 }
 
 export interface TechCategory {
