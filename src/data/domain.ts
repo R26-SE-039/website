@@ -109,15 +109,31 @@ export const researchProblem = {
 export const mainObjective =
   "To design, implement and evaluate an AI-driven, human-governed framework for end-to-end software testing lifecycle automation that takes a requirement from a live sprint conversation to a validated, executable, traceable test suite, with controlled, developer-approved self-healing when pipelines break.";
 
+// Design Science Research steps, filled from the research paper (§III-A, §III-F).
 export const methodology = {
   name: "Design Science Research",
   steps: [
-    { title: "Problem identification", text: "Fragmented, manual QA lifecycle between requirement and automated test." },
-    { title: "Objectives", text: "One objective per component plus integration and deployment objectives." },
-    { title: "Design and development", text: "Four FastAPI/Node services behind an API gateway with a shared React dashboard." },
-    { title: "Demonstration", text: "End-to-end runs against the SauceDemo benchmark application." },
-    { title: "Evaluation", text: "Measured pass rates, validator calibration, model metrics and panel feedback." },
-    { title: "Communication", text: "Theses, group report, presentations and this website." },
+    {
+      title: "Problem identification",
+      text: "Disconnected tools and manual hand-offs between spoken requirements, tests, failures and traceability.",
+    },
+    {
+      title: "Objectives",
+      text: "Four research questions, one per component, plus their integration into one human-governed framework.",
+    },
+    {
+      title: "Design and development",
+      text: "Five independently deployable microservices (authentication plus the four components), database-per-service, connected only through defined APIs.",
+    },
+    {
+      title: "Demonstration",
+      text: "Live meetings flow to stories, tests, CI runs, repairs and the RTM end to end, with SauceDemo as the target application.",
+    },
+    {
+      title: "Evaluation",
+      text: "Component and end-to-end metrics against random and BFS baselines, with three ablations: grounding, Reflexion memory and learned scoring.",
+    },
+    { title: "Communication", text: "Research paper, theses, group report, presentations and this website." },
   ],
 };
 
