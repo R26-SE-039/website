@@ -67,7 +67,7 @@ export default function NavDropdown({ item, active }: Props) {
         hidden={!open}
         className="absolute left-0 top-full z-50 min-w-56 pt-2"
       >
-        <ul className="rounded-xl border border-line bg-surface p-1.5 shadow-xl shadow-black/40">
+        <ul className="rounded-xl border border-line bg-surface p-1.5 shadow-xl shadow-ink/10">
           {item.children?.map((child) => (
             <li key={child.href}>
               <Link

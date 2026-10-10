@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist_Mono, Inter_Tight, Space_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 import BackToTop from "@/components/layout/BackToTop";
 import Footer from "@/components/layout/Footer";
@@ -7,11 +7,13 @@ import Navbar from "@/components/layout/Navbar";
 import { site } from "@/data/site";
 import "./globals.css";
 
-// display:"optional" — on a slow connection the metric-matched fallback stays in
-// place instead of swapping in late, which otherwise re-paints the hero text and
-// pushes LCP past 2.4 s under Lighthouse's mobile throttling.
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"], display: "optional" });
-// Mono is decorative (badges, dates): not preloaded, so it stays off the LCP critical path.
+// display:"optional" keeps the metric-matched fallback in place on slow
+// connections instead of swapping late, which would re-paint the hero text
+// and push LCP out under Lighthouse's mobile throttling.
+const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["latin"], display: "optional" });
+// Logo wordmark only: geometric grotesque, not preloaded (tiny usage).
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], weight: "700", display: "optional", preload: false });
+// Mono is decorative (badges, dates): not preloaded, off the LCP critical path.
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "optional", preload: false });
 
 export const metadata: Metadata = {
@@ -26,15 +28,15 @@ export const metadata: Metadata = {
   },
 };
 
-export const viewport = { themeColor: "#0b1220" };
+export const viewport = { themeColor: "#ffffff" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable} h-full`}>
+    <html lang="en" className={`${interTight.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"
-          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-brand focus:px-4 focus:py-2 focus:text-white"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-navy focus:px-4 focus:py-2 focus:text-white"
         >
           Skip to content
         </a>

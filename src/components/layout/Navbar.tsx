@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { navItems } from "@/data/nav";
-import { site } from "@/data/site";
 import { cn } from "@/lib/cn";
+import Logo from "./Logo";
 import MobileMenu from "./MobileMenu";
 import NavDropdown from "./NavDropdown";
 
@@ -18,14 +18,10 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <header className="sticky top-0 z-50 border-b border-line/80 bg-canvas/80 backdrop-blur-md">
-      <nav aria-label="Main" className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 md:px-8">
-        <Link prefetch={false} href="/" className="flex items-center gap-2.5 rounded-full">
-          <span aria-hidden="true" className="grid h-8 w-8 place-items-center rounded-lg bg-brand-strong font-mono text-sm font-bold text-white">
-            Q
-          </span>
-          <span className="text-base font-semibold tracking-tight text-ink">{site.shortName}</span>
-          <span className="hidden font-mono text-xs text-muted sm:inline">{site.groupId}</span>
+    <header className="sticky top-0 z-50 border-b border-line/70 bg-white/85 backdrop-blur-md">
+      <nav aria-label="Main" className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 md:h-[72px] md:px-8">
+        <Link prefetch={false} href="/" className="flex items-center rounded-full">
+          <Logo />
         </Link>
 
         <ul className="hidden items-center gap-1 md:flex">
@@ -42,7 +38,7 @@ export default function Navbar() {
                       href={item.href}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "block rounded-full px-3 py-2 text-sm font-medium transition-colors",
+                        "block rounded-full px-3 py-2 text-[15px] font-medium transition-colors",
                         active ? "text-ink" : "text-muted hover:text-ink",
                       )}
                     >
@@ -56,7 +52,16 @@ export default function Navbar() {
           })}
         </ul>
 
-        <MobileMenu items={navItems} pathname={norm(pathname)} />
+        <div className="flex items-center gap-2">
+          <Link
+            prefetch={false}
+            href="/contact/"
+            className="hidden min-h-11 items-center rounded-full bg-navy px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1b2a44] md:inline-flex"
+          >
+            Contact Us
+          </Link>
+          <MobileMenu items={navItems} pathname={norm(pathname)} />
+        </div>
       </nav>
     </header>
   );

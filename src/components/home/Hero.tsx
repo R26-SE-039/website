@@ -1,40 +1,46 @@
-import { ArrowRight, FileText } from "lucide-react";
-import Badge from "@/components/ui/Badge";
+import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
-import Container from "@/components/ui/Container";
 import { site } from "@/data/site";
+import HeroMockup from "./HeroMockup";
+import WaveField from "./WaveField";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 -z-10"
-        style={{
-          background:
-            "radial-gradient(60% 50% at 50% 0%, color-mix(in srgb, var(--color-brand) 22%, transparent) 0%, transparent 70%)",
-        }}
-      />
-      <Container className="py-20 md:py-32">
-        <div className="max-w-3xl">
-          <Badge className="fade-up border-brand/40 bg-brand/10 text-brand">{site.groupId}</Badge>
-          {/* The heading and abstract are the largest paint; they must not be animated or LCP slips. */}
-          <h1 className="mt-6 text-4xl font-bold tracking-tight text-ink md:text-6xl">{site.shortName}</h1>
-          <p className="mt-3 text-xl font-medium text-ink/90 md:text-2xl">{site.subtitle}</p>
-          <p className="mt-6 max-w-prose text-base text-muted md:text-lg">{site.abstract}</p>
-          <div className="fade-up fade-up-delay-1 mt-10 flex flex-wrap gap-3">
-            <ButtonLink href="/domain/">
-              Explore the research <ArrowRight size={16} aria-hidden="true" />
-            </ButtonLink>
+    <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-surface">
+      {/* Background: flow-line wave field + readability gradient (fades to the section colour). */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 overflow-hidden">
+          <WaveField />
+        </div>
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(rgba(245,249,253,0.2) 0%, rgba(245,249,253,0.75) 70%, rgb(245,249,253) 100%)",
+          }}
+        />
+      </div>
+
+      <div className="relative mx-auto w-full max-w-[1720px] px-5 py-16 md:px-14 md:py-16">
+        <div className="mx-auto max-w-[840px] text-center">
+          <span className="reveal-fade inline-flex items-center gap-2 rounded-full border-[1.5px] border-line px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
+            {site.heroBadge}
+          </span>
+          <h1 className="reveal-slide reveal-d1 mx-auto mt-7 text-[2.5rem] font-bold leading-[1.1] tracking-[-0.035em] text-ink sm:text-5xl md:text-[3.5rem]">
+            {site.heroTitle}
+          </h1>
+          <p className="reveal-slide reveal-d2 mx-auto mt-7 max-w-[640px] text-lg leading-[1.55] text-muted">
+            {site.heroDescription}
+          </p>
+          <div className="reveal-fade reveal-d3 mt-9 flex flex-wrap justify-center gap-3.5">
+            <ButtonLink href="/domain/">Explore the research</ButtonLink>
             <ButtonLink href="/documents/" variant="secondary">
-              <FileText size={16} aria-hidden="true" /> View documents
+              View documents <ArrowRight size={16} aria-hidden="true" />
             </ButtonLink>
           </div>
-          <p className="fade-up fade-up-delay-2 mt-8 text-sm text-muted">
-            {site.institution} · {site.faculty} · {site.year}
-          </p>
         </div>
-      </Container>
+        <HeroMockup />
+      </div>
     </section>
   );
 }

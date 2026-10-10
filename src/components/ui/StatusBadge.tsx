@@ -16,7 +16,7 @@ export default function StatusBadge({ status, className }: Props) {
     <span
       className={cn(
         "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-xs",
-        positive ? "border-pass/40 bg-pass/10 text-pass" : "border-warn/40 bg-warn/10 text-warn",
+        positive ? "border-pass/40 bg-pass/10 text-[#15803d]" : "border-warn/40 bg-warn/10 text-[#b45309]",
         className,
       )}
     >

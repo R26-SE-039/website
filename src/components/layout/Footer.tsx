@@ -2,13 +2,14 @@ import Link from "next/link";
 import { navItems } from "@/data/nav";
 import { site } from "@/data/site";
 import Container from "@/components/ui/Container";
+import Logo from "./Logo";
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-line bg-surface/40">
+    <footer className="mt-auto border-t border-line bg-surface">
       <Container className="grid gap-10 py-12 md:grid-cols-3">
         <div>
-          <p className="text-lg font-semibold text-ink">{site.shortName}</p>
+          <Logo />
           <p className="mt-1 text-sm text-muted">{site.subtitle}</p>
           <p className="mt-3 font-mono text-xs text-muted">
             {site.groupId} · {site.institution}

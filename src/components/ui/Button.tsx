@@ -2,14 +2,16 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Variant = "primary" | "secondary";
+type Variant = "primary" | "secondary" | "navy";
 
 const base =
-  "inline-flex min-h-11 items-center justify-center gap-2 rounded-full px-6 text-sm font-semibold transition-colors duration-200";
+  "inline-flex min-h-12 items-center justify-center gap-2 rounded-full px-7 text-[15px] font-semibold transition-all duration-200";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-brand-strong text-white hover:bg-brand",
-  secondary: "border border-line bg-transparent text-ink hover:border-brand hover:bg-surface-2",
+  // Cyan fill with navy text: 8.4:1 contrast.
+  primary: "bg-brand text-brand-ink hover:brightness-95 hover:-translate-y-px",
+  secondary: "border-[1.5px] border-ink bg-transparent text-ink hover:bg-ink hover:text-white",
+  navy: "bg-navy text-white hover:bg-[#1b2a44]",
 };
 
 type LinkProps = { href: string; children: ReactNode; variant?: Variant; className?: string };

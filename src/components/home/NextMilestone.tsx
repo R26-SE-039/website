@@ -9,14 +9,14 @@ export default function NextMilestone() {
   if (!next) return null;
 
   return (
-    <section className="border-t border-line py-16 md:py-20">
+    <section className="bg-surface py-16 md:py-20">
       <Container>
         <Link
           href={`/milestones/#${next.id}`}
-          className="group flex flex-col gap-4 rounded-2xl border border-line bg-surface p-6 transition-colors hover:border-brand hover:bg-surface-2 md:flex-row md:items-center md:justify-between"
+          className="group flex flex-col gap-4 rounded-2xl border border-line bg-white p-6 transition-colors hover:border-brand md:flex-row md:items-center md:justify-between"
         >
           <div className="flex items-start gap-4">
-            <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand/15 text-brand">
+            <span aria-hidden="true" className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-brand/15 text-ink">
               <CalendarClock size={20} />
             </span>
             <div>
@@ -28,7 +28,7 @@ export default function NextMilestone() {
           <div className="flex items-center gap-4 md:shrink-0">
             <span className="font-mono text-sm text-muted">{next.date}</span>
             <StatusBadge status={next.status} />
-            <ArrowRight size={18} aria-hidden="true" className="text-brand transition-transform group-hover:translate-x-1" />
+            <ArrowRight size={18} aria-hidden="true" className="text-ink transition-transform group-hover:translate-x-1" />
           </div>
         </Link>
       </Container>

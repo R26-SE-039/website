@@ -3,6 +3,19 @@ export const site = {
   fullTitle: "NextGen QA — An AI-Powered Closed-Loop QA Automation Platform",
   subtitle: "An AI-Powered Closed-Loop QA Automation Platform",
   groupId: "R26-SE-039",
+  heroBadge: "Stories · Gherkin · Test code · Self-healing · Traceability",
+  heroTitle: "From sprint conversation to self-healing test, in one closed loop.",
+  heroDescription:
+    "NextGen QA turns meeting speech into user stories, generates and independently validates executable UI tests, heals the ones that break, and traces every requirement to its result.",
+  // Dashboard recording shown in the hero frame. Add the file manually to
+  // public/video/dashboard.mp4 (keep it short, 720p, < 6 MB) and set enabled: true.
+  // public/video/ is git-ignored on purpose (no large binaries in the repo).
+  heroVideo: {
+    enabled: false,
+    src: "/video/dashboard.mp4",
+    poster: "", // optional: /images/dashboard-poster.webp (1280x720, <= 80 KB)
+    caption: "NextGen QA dashboard — story to validated test",
+  },
   year: 2026,
   institution: "Sri Lanka Institute of Information Technology (SLIIT)",
   faculty: "Faculty of Computing",

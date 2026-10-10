@@ -7,7 +7,7 @@ export default function Card({ children, className, as: Tag = "div" }: Props) {
   return (
     <Tag
       className={cn(
-        "rounded-2xl border border-line bg-surface p-6 transition-colors duration-200 hover:border-brand hover:bg-surface-2",
+        "rounded-2xl border border-line bg-white p-6 transition-colors duration-200 hover:border-brand hover:bg-surface",
         className,
       )}
     >

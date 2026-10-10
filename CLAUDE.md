@@ -189,35 +189,54 @@ Navigation rules (from the guidelines):
 
 ## 8. Design system
 
-**Mood:** modern, technical, calm — a QA/testing product feel. Dark theme only (one polished theme).
+**Mood (updated Oct 2026, modelled on vesant.ai):** white, clean, product-grade. Light canvas with navy
+ink and one cyan accent; selected sections flip to dark navy with the `.dark-section` class
+(same token names, inverted) for contrast and rhythm: hero (light, wavy cursor field) → stats strip
+(navy) → loop (white) → components "lifecycle" rows (navy) → next milestone (soft).
 
 ### Colour tokens (`globals.css`, Tailwind v4)
 
 ```css
-@import "tailwindcss";
-
 @theme {
-  --color-canvas:    #0b1220;  /* page background */
-  --color-surface:   #111a2e;  /* cards */
-  --color-surface-2: #16223a;  /* hover / raised */
-  --color-line:      #1f2b45;  /* borders, dividers */
-  --color-ink:       #e5e7eb;  /* main text */
-  --color-muted:     #94a3b8;  /* secondary text */
-  --color-brand:     #3b82f6;  /* primary accent: links, outlines, focus */
-  --color-brand-strong: #2563eb; /* filled buttons only: white text passes AA (5.2:1); #3b82f6 does not (3.7:1) */
-  --color-pass:      #22c55e;  /* ONLY for completed / available / passed */
-  --color-warn:      #f59e0b;  /* ONLY for pending / upcoming */
-  --color-c1:        #a78bfa;  /* Component 1 */
-  --color-c2:        #3b82f6;  /* Component 2 */
-  --color-c3:        #f472b6;  /* Component 3 */
-  --color-c4:        #2dd4bf;  /* Component 4 */
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-canvas:    #ffffff;  /* page background */
+  --color-surface:   #f5f9fd;  /* soft panels, hero */
+  --color-surface-2: #eaf2fa;  /* hover / raised */
+  --color-line:      #c9dcec;  /* borders, dividers */
+  --color-ink:       #0e182a;  /* headings, main text (navy) */
+  --color-muted:     #4a5a72;  /* secondary text */
+  --color-brand:     #00c2ff;  /* cyan accent: primary buttons, highlights (navy text on it: 8.4:1) */
+  --color-brand-ink: #0e182a;  /* text on cyan */
+  --color-navy:      #0e182a;  /* dark sections, navbar CTA */
+  --color-navy-2:    #152238;  /* dark section cards */
+  --color-on-navy-muted: #a9b6c9;
+  --color-pass: #16a34a;  --color-warn: #d97706;    /* status only */
+  --color-c1: #7c5cff;  --color-c2: #00c2ff;  --color-c3: #f0569a;  --color-c4: #14b8a6;
+  --font-sans: var(--font-inter-tight);    /* headings + body, tracking -0.035em on h1 */
+  --font-logo: var(--font-space-grotesk);  /* wordmark only */
+  --font-mono: var(--font-geist-mono);     /* badges, dates, ids */
 }
 ```
 
 Rules: one accent (`brand`) per screen; green/amber only carry status meaning;
-component colours appear only where a component is identified (loop diagram, cards, badges).
+component colours appear only where a component is identified (loop diagram, stage rows, badges).
+Buttons: primary = cyan pill with navy text; secondary = navy outline; `navy` = filled navy (navbar CTA).
+Logo: `<Logo/>` text wordmark "NEXTGEN ▪ QA" in Space Grotesk; no image logo yet.
+
+### Hero (implemented)
+Badge pill → h1 (56–64 px, −0.035em) → abstract (18 px, max 640 px) → two pills → group line →
+full-width browser-frame mockup (`HeroMockup`, 16/8.2, max 860 px) with the dashboard video slot.
+Background: `WaveField`, a "flow-line" wave canvas (lattice of horizontal lines, points displaced by
+3-D Perlin noise, pushed by the pointer with spring tension/friction — the React-Bits "Waves" look,
+written inline, no dependency) under a gradient that fades to the section colour (0.2 → 0.75 at 70% → 1).
+Client component, DPR capped at 1.5, animates only while the hero is in view, one static frame under
+reduced motion. Props: lineColor, xGap, yGap, ampX, ampY, speed, cursorRadius, cursorMax.
+Layout: `Container` caps at 1720 px (`narrow` = 1152 px for text pages); hero text column 840 px.
+Reveal: transform-only slide on h1/abstract (LCP-safe), fade on badge/buttons; mockup drifts up with
+`animation-timeline: view()` where supported.
+
+**Hero video:** add `public/video/dashboard.mp4` manually (git-ignored; 720p, short loop, < 6 MB so the
+upload stays under 20 MB) and set `site.heroVideo.enabled = true`. It renders `<video autoplay muted loop
+playsinline preload="metadata">`. Until then a CSS placeholder of the dashboard chrome is shown.
 
 ### Typography
 - `h1` 48–60 px (mobile 36 px), bold, tight tracking · `h2` 30–36 px · `h3` 20–24 px · body 16–18 px, line-height 1.7.

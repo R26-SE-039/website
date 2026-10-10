@@ -40,7 +40,7 @@ export default function MobileMenu({ items, pathname }: Props) {
       <div
         id="mobile-menu"
         hidden={!open}
-        className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-line bg-canvas px-5 py-6"
+        className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-line bg-white px-5 py-6"
       >
         <ul className="space-y-1">
           {items.map((item) => {
