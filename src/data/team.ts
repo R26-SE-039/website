@@ -1,4 +1,7 @@
-import type { Member } from "@/types/content";
+import type { Member, Supervisor } from "@/types/content";
+
+// Photos: add public/images/team/<studentId>.webp (square, ~400 px) and set `photo`.
+// Optional links: linkedin, github (members); linkedin, scholar (supervisors).
 
 export const team: Member[] = [
   {
@@ -6,14 +9,12 @@ export const team: Member[] = [
     studentId: "IT22251114",
     component: 1,
     email: "it22251114@my.sliit.lk",
-    photo: "/images/team/placeholder.svg",
   },
   {
     name: "Abeygunasekara D.T.",
     studentId: "IT22303684",
     component: 2,
     email: "it22303684@my.sliit.lk",
-    photo: "/images/team/IT22303684.webp",
     achievements: [],
   },
   {
@@ -21,18 +22,16 @@ export const team: Member[] = [
     studentId: "IT22371768",
     component: 3,
     email: "it22371768@my.sliit.lk",
-    photo: "/images/team/placeholder.svg",
   },
   {
     name: "Rashani K.G.M.",
     studentId: "IT22182678",
     component: 4,
     email: "it22182678@my.sliit.lk",
-    photo: "/images/team/placeholder.svg",
   },
 ];
 
-export const supervisors = [
+export const supervisors: Supervisor[] = [
   { role: "Supervisor", name: "Ms. Suriyaa Kumari", email: "suriyaa.k@sliit.lk" },
   { role: "Co-Supervisor", name: "Mr. Eishan Weerasinghe", email: "eishan.w@sliit.lk" },
 ];

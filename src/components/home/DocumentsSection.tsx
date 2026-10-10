@@ -1,133 +1,115 @@
-import { Download, FileText, GraduationCap, Presentation as PresentationIcon, type LucideIcon } from "lucide-react";
+import { Download, FileText, Presentation as PresentationIcon, type LucideIcon } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
-import { cn } from "@/lib/cn";
 import { documents } from "@/data/documents";
 import { presentations } from "@/data/presentations";
+import type { DocumentItem } from "@/types/content";
 
-type Row = {
-  id: string;
-  title: string;
-  meta: string;
-  done: boolean; // completed / available
-  statusLabel: string;
-  href?: string;
-};
+type Row = { label: string; href?: string };
+type Card = { id: string; title: string; when: string; rows: Row[] };
 
-const isPlaceholder = (v: string) => /^(TODO|TBA)$/i.test(v.trim());
+const placeholder = (v?: string) => !v || /^(TODO|TBA)\b/i.test(v.trim());
 
-const projectDocs: Row[] = documents
+const docHref = (d: DocumentItem) => (d.status === "available" ? d.href : undefined);
+const docWhen = (d: DocumentItem) =>
+  !placeholder(d.date) ? `Submitted on ${d.date}` : d.status === "available" ? "Published" : "Not submitted yet";
+
+// Group documents get one card each; the individual theses become extra rows on the Final Report card.
+const theses = documents.filter((d) => d.id.startsWith("final-c"));
+const docCards: Card[] = documents
   .filter((d) => !d.id.startsWith("final-c"))
   .map((d) => ({
     id: d.id,
-    title: d.title,
-    meta: `${d.owner} · ${d.format}`,
-    done: d.status === "available",
-    statusLabel: d.status === "available" ? "Available" : "Pending",
-    href: d.status === "available" ? d.href : undefined,
+    title: d.id === "final-group" ? "Final Report" : d.title,
+    when: docWhen(d),
+    rows: [
+      { label: d.owner === "Group" ? "Group" : d.owner, href: docHref(d) },
+      ...(d.id === "final-group" ? theses.map((t) => ({ label: t.owner, href: docHref(t) })) : []),
+    ],
   }));
 
-// "Individual Thesis — Component 2: Intelligent Test Case Generation" → "Component 2 thesis" + topic
-const theses: Row[] = documents
-  .filter((d) => d.id.startsWith("final-c"))
-  .map((d) => {
-    const topic = d.title.split(": ")[1] ?? d.title;
-    return {
-      id: d.id,
-      title: `Component ${d.id.slice(-1)} · ${topic}`,
-      meta: `${d.owner} · ${d.format}`,
-      done: d.status === "available",
-      statusLabel: d.status === "available" ? "Available" : "Pending",
-      href: d.status === "available" ? d.href : undefined,
-    };
-  });
-
-const slideRows: Row[] = presentations.map((p) => ({
+const slideCards: Card[] = presentations.map((p) => ({
   id: p.id,
   title: p.title,
-  meta: isPlaceholder(p.date) ? "Slides · PDF" : `${p.date} · Slides`,
-  done: p.status === "completed",
-  statusLabel: p.status === "completed" ? "Completed" : "Upcoming",
-  href: p.slidesHref,
+  when: !placeholder(p.date)
+    ? `${p.status === "completed" ? "Presented on" : "Scheduled for"} ${p.date}`
+    : p.status === "completed"
+      ? "Presented"
+      : "Date to be confirmed",
+  rows: [{ label: "Group", href: p.slidesHref }],
 }));
 
-function DownloadButton({ href, title }: { href?: string; title: string }) {
-  if (href) {
+function DownloadLink({ row, title }: { row: Row; title: string }) {
+  if (row.href) {
     return (
       <a
-        href={href}
+        href={row.href}
         download
         target="_blank"
         rel="noopener noreferrer"
-        className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-brand px-3.5 py-1.5 text-xs font-semibold text-brand-ink hover:brightness-95"
+        className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-brand underline-offset-4 hover:underline"
       >
-        <Download size={14} aria-hidden="true" />
+        <Download size={13} aria-hidden="true" />
         Download
-        <span className="sr-only">{title}</span>
+        <span className="sr-only">
+          {title} ({row.label})
+        </span>
       </a>
     );
   }
   return (
-    <span
-      aria-disabled="true"
-      title="Not published yet"
-      className="inline-flex shrink-0 cursor-not-allowed items-center gap-1.5 rounded-full border border-white/10 px-3.5 py-1.5 text-xs font-semibold text-white/35"
-    >
-      <Download size={14} aria-hidden="true" />
+    <span aria-disabled="true" title="Not published yet" className="inline-flex shrink-0 cursor-not-allowed items-center gap-1.5 text-xs font-semibold text-white/30">
+      <Download size={13} aria-hidden="true" />
       Download
-      <span className="sr-only">{title} (not published yet)</span>
+      <span className="sr-only">
+        {title} ({row.label}, not published yet)
+      </span>
     </span>
   );
 }
 
-function Column({ id, icon: Icon, title, rows }: { id?: string; icon: LucideIcon; title: string; rows: Row[] }) {
-  const ready = rows.filter((r) => r.href).length;
+function CardGrid({ cards, icon: Icon }: { cards: Card[]; icon: LucideIcon }) {
   return (
-    <div id={id} data-nav-section={id ? "" : undefined} className="p-5 md:p-6">
-      <div className="flex items-center justify-between gap-3">
-        <h3 className="flex items-center gap-2.5 font-bold text-white">
-          <Icon size={18} aria-hidden="true" className="text-brand" />
-          {title}
-        </h3>
-        <span className="font-mono text-[11px] text-on-navy-muted">
-          {ready}/{rows.length} ready
-        </span>
-      </div>
-      <ul className="mt-4">
-        {rows.map((r) => (
-          <li key={r.id} className="group flex items-center gap-3 border-b border-white/10 py-3.5 last:border-b-0">
-            <span
-              aria-hidden="true"
-              className="grid size-9 shrink-0 place-items-center rounded-xl bg-white/[0.07] text-white/80 group-hover:bg-brand group-hover:text-navy motion-safe:transition-[background-color,color,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110"
-            >
-              <Icon size={16} />
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-semibold text-white" title={r.title}>
-                {r.title}
-              </p>
-              <p className="mt-0.5 flex items-center gap-2 truncate text-xs text-on-navy-muted">
-                <span
-                  aria-hidden="true"
-                  className={cn("size-1.5 shrink-0 rounded-full", r.done ? "bg-pass" : "bg-warn")}
-                />
-                <span className={r.done ? "text-[#4ade80]" : "text-[#fbbf24]"}>{r.statusLabel}</span>
-                <span aria-hidden="true">·</span>
-                <span className="truncate">{r.meta}</span>
-              </p>
+    <ul className="mt-6 grid items-start gap-4 sm:grid-cols-2 xl:grid-cols-4">
+      {cards.map((c) => (
+        <li
+          key={c.id}
+          className="group overflow-hidden rounded-2xl border border-navy-line bg-navy-2 motion-safe:transition-colors hover:border-brand/40"
+        >
+          <div className="px-5 pt-4 pb-3.5">
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden="true"
+                className="grid size-8 shrink-0 place-items-center rounded-lg bg-white/10 text-white group-hover:bg-brand group-hover:text-navy motion-safe:transition-[background-color,color,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110"
+              >
+                <Icon size={15} />
+              </span>
+              <div className="min-w-0">
+                <h4 className="truncate text-[15px] font-bold leading-snug text-white">{c.title}</h4>
+                <p className="text-xs text-on-navy-muted">{c.when}</p>
+              </div>
             </div>
-            <DownloadButton href={r.href} title={r.title} />
-          </li>
-        ))}
-      </ul>
-    </div>
+          </div>
+          <ul className="divide-y divide-white/10 border-t border-white/10">
+            {c.rows.map((r) => (
+              <li key={r.label} className="flex items-center justify-between gap-3 px-5 py-2">
+                <span className="truncate text-[13px] text-white/85">{r.label}</span>
+                <DownloadLink row={r} title={c.title} />
+              </li>
+            ))}
+          </ul>
+        </li>
+      ))}
+    </ul>
   );
 }
 
+const subheading = "text-xl font-bold text-white md:text-2xl";
+
 /*
-  Documents and presentations in one compact panel: three equal columns of four
-  rows each. Every row has a Download button that becomes active once its file is
-  published (set `href` / `slidesHref` in the data). #presentations stays a nav anchor.
+  Documents and presentations in one section, as two card grids. A card's footer
+  rows are its downloads (Group, or one per member for the theses); each becomes
+  active once its `href` / `slidesHref` is set in the data. #presentations stays a nav anchor.
 */
 export default function DocumentsSection() {
   return (
@@ -135,15 +117,21 @@ export default function DocumentsSection() {
       <Container>
         <SectionIntro
           dark
-          eyebrow="Downloads · Documents & presentations"
-          title="Documents and slides, ready to download."
-          description="Each file becomes downloadable as soon as it is published."
+          eyebrow="Downloads"
+          title="Documents and presentations."
+          description="Every document and slide deck of the project, downloadable as soon as it is published."
         />
 
-        <div className="mt-12 grid overflow-hidden rounded-3xl border border-navy-line bg-navy-2 lg:grid-cols-3 lg:divide-x lg:divide-white/10 max-lg:divide-y max-lg:divide-white/10">
-          <Column icon={FileText} title="Project documents" rows={projectDocs} />
-          <Column icon={GraduationCap} title="Individual theses" rows={theses} />
-          <Column id="presentations" icon={PresentationIcon} title="Presentations" rows={slideRows} />
+        <div className="mt-12">
+          <h3 className={subheading}>Documents</h3>
+          <p className="mt-2 text-on-navy-muted">All documents related to this project.</p>
+          <CardGrid cards={docCards} icon={FileText} />
+        </div>
+
+        <div id="presentations" data-nav-section className="mt-12">
+          <h3 className={subheading}>Presentations</h3>
+          <p className="mt-2 text-on-navy-muted">Slides from every presentation of this project.</p>
+          <CardGrid cards={slideCards} icon={PresentationIcon} />
         </div>
       </Container>
     </section>
