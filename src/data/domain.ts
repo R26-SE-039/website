@@ -137,21 +137,64 @@ export const methodology = {
   ],
 };
 
+// `icon` is a key of brandIcons (src/data/brandIcons.ts); items without one use a line icon.
 export const technologies: TechCategory[] = [
-  { category: "Frontend", items: [{ name: "React 19" }, { name: "Vite" }, { name: "Tailwind CSS" }, { name: "Monaco Editor" }] },
-  { category: "Backend", items: [{ name: "FastAPI (Python)" }, { name: "Node.js / Express" }, { name: "PostgreSQL (Neon)" }, { name: "SQLAlchemy" }] },
-  { category: "AI / ML", items: [{ name: "OpenAI" }, { name: "Anthropic Claude" }, { name: "Google Gemini" }, { name: "Ollama" }, { name: "scikit-learn" }] },
-  { category: "Testing", items: [{ name: "Playwright" }, { name: "Selenium" }, { name: "Cypress" }, { name: "pytest" }] },
-  { category: "DevOps & Cloud", items: [{ name: "Docker" }, { name: "Caddy" }, { name: "AWS EC2" }, { name: "GitHub Actions" }, { name: "Vercel" }] },
+  {
+    category: "Frontend",
+    items: [
+      { name: "React 19", use: "Shared dashboard", icon: "react" },
+      { name: "Vite", use: "Build and dev server", icon: "vite" },
+      { name: "Tailwind CSS", use: "Styling", icon: "tailwindcss" },
+      { name: "Monaco Editor", use: "Gherkin and code editors", icon: "visualstudiocode" },
+    ],
+  },
+  {
+    category: "Backend",
+    items: [
+      { name: "FastAPI (Python)", use: "Component services", icon: "fastapi" },
+      { name: "Node.js / Express", use: "Auth and API gateway", icon: "nodedotjs" },
+      { name: "PostgreSQL (Neon)", use: "Database per service", icon: "postgresql" },
+      { name: "SQLAlchemy", use: "ORM", icon: "sqlalchemy" },
+    ],
+  },
+  {
+    category: "AI / ML",
+    items: [
+      { name: "OpenAI", use: "LLM provider", icon: "openai" },
+      { name: "Anthropic Claude", use: "LLM provider and judge", icon: "anthropic" },
+      { name: "Google Gemini", use: "LLM and embeddings", icon: "googlegemini" },
+      { name: "Ollama", use: "Local models", icon: "ollama" },
+      { name: "scikit-learn", use: "Classifiers and scoring", icon: "scikitlearn" },
+    ],
+  },
+  {
+    category: "Testing",
+    items: [
+      { name: "Playwright", use: "DOM inspector, agent, suites", icon: "playwright" },
+      { name: "Selenium", use: "Generated suites", icon: "selenium" },
+      { name: "Cypress", use: "Generated suites", icon: "cypress" },
+      { name: "pytest", use: "Service tests", icon: "pytest" },
+    ],
+  },
+  {
+    category: "DevOps & Cloud",
+    items: [
+      { name: "Docker", use: "Compose deployment", icon: "docker" },
+      { name: "Caddy", use: "HTTPS reverse proxy", icon: "caddy" },
+      { name: "AWS EC2", use: "Hosting", icon: "amazonec2" },
+      { name: "GitHub Actions", use: "Test runs and CI", icon: "githubactions" },
+      { name: "Vercel", use: "Dashboard hosting", icon: "vercel" },
+    ],
+  },
   {
     category: "Speech, retrieval & coverage",
     items: [
-      { name: "Azure Speech SDK" },
-      { name: "ModernBERT" },
-      { name: "pgvector" },
-      { name: "RandomForest" },
-      { name: "nyc / Istanbul" },
-      { name: "coverage.py" },
+      { name: "Azure Speech SDK", use: "Speech-to-text, diarisation", icon: "microsoftazure" },
+      { name: "ModernBERT", use: "Utterance classifier", icon: "huggingface" },
+      { name: "pgvector", use: "Semantic search", icon: "postgresql" },
+      { name: "RandomForest", use: "Quality-score check" },
+      { name: "nyc / Istanbul", use: "JavaScript coverage" },
+      { name: "coverage.py", use: "Python coverage" },
     ],
   },
 ];

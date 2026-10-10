@@ -9,7 +9,6 @@ import LoopDiagram from "@/components/home/LoopDiagram";
 import Methodology from "@/components/home/Methodology";
 import MilestonesSection from "@/components/home/MilestonesSection";
 import Objectives from "@/components/home/Objectives";
-import PresentationsSection from "@/components/home/PresentationsSection";
 import ResearchGap from "@/components/home/ResearchGap";
 import ResearchProblem from "@/components/home/ResearchProblem";
 import TechGrid from "@/components/home/TechGrid";
@@ -32,7 +31,6 @@ export default function HomePage() {
       <TechGrid />
       <MilestonesSection />
       <DocumentsSection />
-      <PresentationsSection />
       <AboutSection />
       <ContactSection />
     </>

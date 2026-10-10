@@ -1,45 +1,98 @@
+import type { CSSProperties } from "react";
+import {
+  AudioLines,
+  BrainCircuit,
+  Cloud,
+  FlaskConical,
+  Gauge,
+  Monitor,
+  Server,
+  Trees,
+  type LucideIcon,
+} from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
+import { brandIcons, type BrandSlug } from "@/data/brandIcons";
 import { technologies } from "@/data/domain";
-import { asset } from "@/lib/asset";
 
-const initials = (name: string) =>
-  name
-    .replace(/\(.*?\)/g, "")
-    .split(/[\s/.]+/)
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((w) => w[0]?.toUpperCase())
-    .join("");
+const categoryIcons: Record<string, LucideIcon> = {
+  Frontend: Monitor,
+  Backend: Server,
+  "AI / ML": BrainCircuit,
+  Testing: FlaskConical,
+  "DevOps & Cloud": Cloud,
+  "Speech, retrieval & coverage": AudioLines,
+};
 
+// Tools without a brand mark get a line icon instead.
+const fallbackIcons: Record<string, LucideIcon> = {
+  RandomForest: Trees,
+  "nyc / Istanbul": Gauge,
+  "coverage.py": Gauge,
+};
+
+function Logo({ icon, name }: { icon?: string; name: string }) {
+  const brand = icon ? brandIcons[icon as BrandSlug] : undefined;
+  if (brand) {
+    return (
+      <svg viewBox="0 0 24 24" aria-hidden="true" className="size-6 fill-current">
+        <path d={brand.path} />
+      </svg>
+    );
+  }
+  const Fallback = fallbackIcons[name] ?? Gauge;
+  return <Fallback size={22} aria-hidden="true" />;
+}
+
+/** Technologies by category: real brand marks in navy, switching to their brand colour on hover. */
 export default function TechGrid() {
   return (
     <section id="technologies" data-nav-section className="bg-surface py-24 md:py-32">
       <Container>
-        <SectionIntro eyebrow="Domain · Technologies used" title="The stack behind the loop." />
-        <div className="mt-14 space-y-12">
-          {technologies.map((cat) => (
-            <div key={cat.category}>
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-muted">{cat.category}</p>
-              <ul className="mt-5 grid grid-cols-3 gap-5 sm:grid-cols-4 md:grid-cols-6 xl:grid-cols-8">
-                {cat.items.map((t) => (
-                  <li key={t.name} className="flex flex-col items-center text-center">
-                    <span className="grid h-20 w-20 place-items-center rounded-full border border-line bg-white shadow-sm transition-transform hover:-translate-y-0.5">
-                      {t.logo ? (
-                        // eslint-disable-next-line @next/next/no-img-element -- static SVG logo
-                        <img src={asset(t.logo)} alt="" width={40} height={40} loading="lazy" />
-                      ) : (
-                        <span aria-hidden="true" className="font-logo text-base font-bold tracking-wide text-ink">
-                          {initials(t.name)}
-                        </span>
-                      )}
+        <SectionIntro
+          eyebrow="Domain · Technologies used"
+          title="The stack behind the loop."
+          description="What each part of NextGen QA is built and run with, from the dashboard to the speech pipeline."
+        />
+
+        <div className="mt-14 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {technologies.map((cat) => {
+            const CatIcon = categoryIcons[cat.category] ?? Server;
+            return (
+              <section key={cat.category} className="rounded-3xl border border-line bg-white p-6 md:p-7">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <span aria-hidden="true" className="grid size-10 place-items-center rounded-xl bg-navy text-brand">
+                      <CatIcon size={18} />
                     </span>
-                    <span className="mt-3 text-sm text-muted">{t.name}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+                    <h3 className="text-lg font-bold text-ink">{cat.category}</h3>
+                  </div>
+                  <span className="font-mono text-xs text-muted">{cat.items.length} tools</span>
+                </div>
+
+                <ul className="mt-6 grid gap-2 sm:grid-cols-2">
+                  {cat.items.map((t) => {
+                    const hex = t.icon ? brandIcons[t.icon as BrandSlug]?.hex : undefined;
+                    return (
+                      <li
+                        key={t.name}
+                        style={{ "--brand-hex": hex ?? "var(--color-brand)" } as CSSProperties}
+                        className="group flex items-center gap-3 rounded-2xl p-2.5 motion-safe:transition-colors hover:bg-surface"
+                      >
+                        <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-line bg-white text-ink motion-safe:transition-[color,border-color,scale] motion-safe:duration-300 group-hover:border-(--brand-hex) group-hover:text-(--brand-hex) motion-safe:group-hover:scale-110">
+                          <Logo icon={t.icon} name={t.name} />
+                        </span>
+                        <span className="min-w-0">
+                          <span className="block text-sm font-semibold text-ink">{t.name}</span>
+                          {t.use && <span className="block text-xs leading-snug text-muted">{t.use}</span>}
+                        </span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </section>
+            );
+          })}
         </div>
       </Container>
     </section>

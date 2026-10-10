@@ -82,7 +82,8 @@ export interface GapRow {
 
 export interface TechItem {
   name: string;
-  logo?: string; // SVG path under public/logos
+  use?: string; // what it does in NextGen QA
+  icon?: string; // key of brandIcons in src/data/brandIcons.ts
 }
 
 export interface TechCategory {

@@ -21,7 +21,7 @@ export const documents: DocumentItem[] = [
   },
   {
     id: "checklist-1",
-    title: "Checklist Document — TODO: name",
+    title: "Checklist Document", // TODO: exact checklist name
     category: "checklist",
     owner: "Group",
     format: "PDF",

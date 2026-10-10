@@ -1,79 +1,70 @@
-import { Mail, MapPin, Phone, Send } from "lucide-react";
+import { MapPin, Phone, Send } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
 import { site } from "@/data/site";
 import { team } from "@/data/team";
-import CopyButton from "./CopyButton";
+import { mailtoHref } from "@/lib/contact";
 
+/** One horizontal "write to us" panel: mailto pre-filled with the e-mail template, plus institution details. */
 export default function ContactSection() {
-  const mailto = `mailto:${site.contactEmail}?subject=${encodeURIComponent(site.emailTemplate.subject)}&body=${encodeURIComponent(site.emailTemplate.body)}`;
   const phones = team.filter((m) => m.phone);
 
   return (
     <section id="contact" data-nav-section className="bg-white py-24 md:py-32">
       <Container>
-        <SectionIntro eyebrow="Contact us" title="Talk to the team." description="Questions about the research, the platform or collaboration are welcome." />
+        <SectionIntro
+          eyebrow="Contact us"
+          title="Talk to the team."
+          description="Questions about the research, the platform or collaboration are welcome."
+        />
 
-        <div className="mt-14 grid gap-8 lg:grid-cols-12">
-          <ul className="grid gap-4 sm:grid-cols-2 lg:col-span-5 lg:grid-cols-1">
-            <li className="rounded-[24px] border border-line bg-surface p-6">
-              <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-2xl bg-white text-ink">
-                <Mail size={20} />
-              </span>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted">Group email</p>
-              <a href={`mailto:${site.contactEmail}`} className="mt-1 block text-base font-bold text-ink">
-                {site.contactEmail}
-              </a>
-              <ul className="mt-3 space-y-1 text-sm text-muted">
-                {team.map((m) => (
-                  <li key={m.studentId + m.component}>
-                    {m.name}: <a href={`mailto:${m.email}`} className="text-ink underline-offset-4 hover:underline">{m.email}</a>
-                  </li>
-                ))}
-              </ul>
-            </li>
-            <li className="rounded-[24px] border border-line bg-surface p-6">
-              <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-2xl bg-white text-ink">
-                <Phone size={20} />
-              </span>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted">Phone</p>
-              {phones.length ? (
-                <ul className="mt-1 space-y-1 text-base font-bold text-ink">
-                  {phones.map((m) => (
-                    <li key={m.phone}>{m.phone}</li>
-                  ))}
-                </ul>
-              ) : (
-                <p className="mt-1 text-base font-bold text-ink">TODO: contact numbers</p>
-              )}
-            </li>
-            <li className="rounded-[24px] border border-line bg-surface p-6 sm:col-span-2 lg:col-span-1">
-              <span aria-hidden="true" className="grid h-11 w-11 place-items-center rounded-2xl bg-white text-ink">
-                <MapPin size={20} />
-              </span>
-              <p className="mt-4 text-xs font-semibold uppercase tracking-widest text-muted">Institution</p>
-              <p className="mt-1 text-base font-bold text-ink">{site.institution}</p>
-              <p className="text-sm text-muted">
-                {site.faculty} · {site.department}
-              </p>
-            </li>
-          </ul>
+        <div className="relative mt-14 overflow-hidden rounded-3xl bg-navy p-7 text-white md:p-10">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-24 -bottom-32 size-80 rounded-full border border-white/10"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-8 -bottom-16 size-52 rounded-full border border-brand/20"
+          />
 
-          <div className="rounded-[24px] border border-line bg-white p-7 lg:col-span-7">
-            <p className="text-xs font-semibold uppercase tracking-widest text-muted">Email template</p>
-            <p className="mt-2 text-base font-bold text-ink">{site.emailTemplate.subject}</p>
-            <pre className="mt-4 whitespace-pre-wrap rounded-2xl bg-surface p-5 font-sans text-[15px] leading-relaxed text-muted">
-              {site.emailTemplate.body}
-            </pre>
-            <div className="mt-5 flex flex-wrap gap-3">
-              <a
-                href={mailto}
-                className="inline-flex min-h-12 items-center gap-2 rounded-full bg-brand px-7 text-[15px] font-semibold text-ink hover:brightness-95"
-              >
-                <Send size={16} aria-hidden="true" /> Write to us
-              </a>
-              <CopyButton text={`Subject: ${site.emailTemplate.subject}\n\n${site.emailTemplate.body}`} label="Copy template" />
+          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
+            <div className="flex gap-5">
+              <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand/15 text-brand">
+                <Send size={22} />
+              </span>
+              <div>
+                <h3 className="text-2xl font-bold leading-snug">Write to the team</h3>
+                <p className="mt-2 max-w-xl text-base leading-relaxed text-on-navy-muted">
+                  Your email opens with our inquiry template already filled in: the subject, a greeting and a space for
+                  your message.
+                </p>
+              </div>
             </div>
+            <a
+              href={mailtoHref}
+              className="inline-flex min-h-12 w-fit shrink-0 items-center gap-2 rounded-full bg-brand px-7 text-[15px] font-semibold text-brand-ink hover:brightness-95 max-md:ml-17"
+            >
+              <Send size={16} aria-hidden="true" /> Write to us
+            </a>
+          </div>
+
+          <div className="relative mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm md:flex-row md:items-start md:gap-12">
+            <p className="flex items-start gap-3">
+              <MapPin size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+              <span>
+                <span className="block font-semibold text-white">{site.institution}</span>
+                <span className="text-on-navy-muted">
+                  {site.faculty} · {site.department} · Malabe, Sri Lanka
+                </span>
+              </span>
+            </p>
+            {phones.length > 0 && (
+              <p className="flex items-start gap-3">
+                <Phone size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
+                <span className="text-on-navy-muted">{phones.map((m) => m.phone).join(" · ")}</span>
+              </p>
+            )}
           </div>
         </div>
       </Container>
