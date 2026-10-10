@@ -1,0 +1,88 @@
+@import "tailwindcss";
+
+@theme {
+  --color-canvas: #0b1220; /* page background */
+  --color-surface: #111a2e; /* cards */
+  --color-surface-2: #16223a; /* hover / raised */
+  --color-line: #1f2b45; /* borders, dividers */
+  --color-ink: #e5e7eb; /* main text */
+  --color-muted: #94a3b8; /* secondary text */
+  --color-brand: #3b82f6; /* primary accent: links, outlines, focus */
+  --color-brand-strong: #2563eb; /* filled buttons: white text reaches 5.2:1 (AA) */
+  --color-pass: #22c55e; /* ONLY for completed / available / passed */
+  --color-warn: #f59e0b; /* ONLY for pending / upcoming */
+  --color-c1: #a78bfa; /* Component 1 */
+  --color-c2: #3b82f6; /* Component 2 */
+  --color-c3: #f472b6; /* Component 3 */
+  --color-c4: #2dd4bf; /* Component 4 */
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Visible focus ring on every interactive element (WCAG 2.4.7). */
+:where(a, button, summary, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+/* Anchored sections sit below the sticky navbar when targeted. */
+[id] {
+  scroll-margin-top: 5.5rem;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-brand) 45%, transparent);
+}
+
+/* Motion is opt-in: only when the visitor has not asked for reduced motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .fade-up {
+    animation: fade-up 600ms ease-out both;
+  }
+  .fade-up-delay-1 {
+    animation-delay: 120ms;
+  }
+  .fade-up-delay-2 {
+    animation-delay: 240ms;
+  }
+  .fade-up-delay-3 {
+    animation-delay: 360ms;
+  }
+  @keyframes fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
