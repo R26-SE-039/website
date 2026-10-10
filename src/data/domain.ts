@@ -1,4 +1,4 @@
-import type { GapRow, LiteratureTheme, TechCategory } from "@/types/content";
+import type { ComponentNo, GapRow, LiteratureTheme, TechCategory } from "@/types/content";
 
 // The five literature-review threads of the research paper (docs/Research_Paper_New (2).pdf, §II-A).
 export const literature: LiteratureTheme[] = [
@@ -77,26 +77,31 @@ export const gaps = [
 export const researchProblem = {
   main:
     "Software quality assurance spans requirement elicitation, test design, execution, defect analysis, traceability and coverage, yet these activities are supported by disconnected tools and manual hand-offs. How can AI connect requirements captured in live meetings to executable tests, execution evidence, failure analysis, governed repair, traceability and coverage in one human-governed workflow?",
+  // RQ1-RQ4 and their headline results, from the research paper (§I and §IV).
   perComponent: [
     {
       no: 1 as const,
       question:
         "Can requirement-bearing utterances be reliably extracted, threaded and conflict-checked from live meeting conversations to produce validated and traceable user stories?",
+      result: "0.94 macro-F1 utterance classification · 0.91 / 0.88 conflict precision / recall · 4.3 / 5 story rating",
     },
     {
       no: 2 as const,
       question:
-        "How can executable UI test suites be generated automatically from Agile user stories such that they are grounded in the real application, discoverable beyond what the stories state, and independently validated before execution, within a closed CI/CD loop?",
+        "Can grounded, coverage-driven agentic test generation produce executable test suites with improved executability and coverage over baseline approaches?",
+      result: "91.2% executability vs 78.6% ungrounded · 84 UI states vs 76 for BFS · APFD 0.82",
     },
     {
       no: 3 as const,
       question:
         "Can CI/CD test failures be accurately classified and safely handled through deterministic self-healing while preventing unauthorised repository modifications?",
+      result: "0.89 root-cause macro-F1 · 100% safety-policy compliance · 0% unsafe modifications",
     },
     {
       no: 4 as const,
       question:
         "Can test quality, requirements traceability, gap analysis and code coverage be maintained using evidence from actual test execution?",
+      result: "98.7% RTM status correctness · 143 ms update latency · 94.1% coverage-agent success",
     },
   ],
 };
@@ -143,11 +148,58 @@ export const literatureInsight = {
 };
 
 export const problemNarrative = [
-  "Agile teams capture requirements in sprint conversations faster than QA engineers can turn them into automated tests. Requirements live in meeting notes, test cases are derived by hand, scripts are hand-coded, failures are triaged manually and traceability is a spreadsheet.",
-  "Every hand-off loses information and time, and the resulting scripts decay as soon as the interface changes, because their locators are hard-coded. Teams ship faster than they can prove that what they ship still works.",
+  "Modern Agile delivery relies on many human and tool hand-offs across the testing lifecycle. Each one loses context, and the AI tools that help with single steps are separate solutions rather than one workflow from requirement to evidence.",
+];
+
+// The four lifecycle problems the paper's introduction names, and the component that answers each.
+export const problemPoints: { no: ComponentNo; title: string; text: string }[] = [
+  {
+    no: 1,
+    title: "Requirements lost in conversation",
+    text: "Requirements are discussed verbally in sprint meetings and later rewritten as backlog items, inviting context loss, misinterpretation and unresolved conflicts.",
+  },
+  {
+    no: 2,
+    title: "Generated tests that do not run",
+    text: "LLMs speed up test writing, but their tests can contain invalid element references, omit acceptance criteria or fail to execute.",
+  },
+  {
+    no: 3,
+    title: "Failures fixed by hand, or unsafely",
+    text: "CI/CD failures need manual diagnosis, and unrestricted automated repair is risky when AI agents can modify the repository.",
+  },
+  {
+    no: 4,
+    title: "Traceability apart from execution",
+    text: "Traceability and coverage are maintained separately from actual test runs, so they are rarely timely or reliable.",
+  },
 ];
 
 export const solutionNarrative = [
-  "NextGen QA treats the whole path as one closed loop. Component 1 listens to the sprint meeting and produces structured user stories. Component 2 turns those stories into Gherkin scenarios and executable Playwright, Selenium and Cypress suites grounded in the real DOM, explores the application with a vision-guided agent, validates every generated artefact with static checks and an independent LLM judge, and runs the suites in CI/CD.",
-  "Component 3 classifies the failures that come back into nine root causes and, for genuine application defects, proposes a repair that a developer must approve before it lands on an isolated auto-heal branch as a draft pull request. Component 4 keeps a live requirements traceability matrix from executed tests, scoring test quality, coverage gaps and risk. Results flow back to the start, so the next sprint begins with evidence rather than assumptions.",
+  "An AI-driven, human-governed framework for the whole testing lifecycle. Requirements captured from live meetings become validated user stories, then executable test scenarios. Execution results drive failure analysis and controlled repair, and every artefact stays linked through a shared traceability layer.",
+  "Human governance is the key design principle: AI components analyse, generate and propose, but consequential artefacts must pass explicit approval gates, and repository changes are restricted by a deterministic safety policy with developer approval.",
+];
+
+// The architecture's four rules, from the paper's conclusion (§V).
+export const designPrinciples: { title: string; text: string; no: ComponentNo }[] = [
+  {
+    no: 1,
+    title: "Classification before generation",
+    text: "Utterances are classified in context and conflict-checked before any user story is written.",
+  },
+  {
+    no: 2,
+    title: "Evidence before approval",
+    text: "Scenarios, element maps and suites are grounded in the real application and approved by an engineer.",
+  },
+  {
+    no: 3,
+    title: "Policy before permission",
+    text: "A deterministic policy and developer approval decide every repair; nothing reaches the main branch.",
+  },
+  {
+    no: 4,
+    title: "Execution before belief",
+    text: "Coverage and traceability are written to the RTM only from successful test execution.",
+  },
 ];
