@@ -2,16 +2,26 @@ import { ArrowRight } from "lucide-react";
 import { ButtonLink } from "@/components/ui/Button";
 import { site } from "@/data/site";
 import HeroMockup from "./HeroMockup";
-import WaveField from "./WaveField";
+import Waves from "@/components/Waves";
 
 export default function Hero() {
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-surface">
       {/* Background: flow-line wave field + readability gradient (fades to the section colour). */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 overflow-hidden">
-          <WaveField />
-        </div>
+        <Waves
+          lineColor="rgba(14, 24, 42, 0.10)"
+          backgroundColor="transparent"
+          waveSpeedX={0.0125}
+          waveSpeedY={0.005}
+          waveAmpX={32}
+          waveAmpY={16}
+          xGap={12}
+          yGap={34}
+          friction={0.925}
+          tension={0.005}
+          maxCursorMove={110}
+        />
         <div
           className="absolute inset-0"
           style={{

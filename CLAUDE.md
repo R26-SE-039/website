@@ -225,11 +225,10 @@ Logo: `<Logo/>` text wordmark "NEXTGEN ▪ QA" in Space Grotesk; no image logo y
 ### Hero (implemented)
 Badge pill → h1 (56–64 px, −0.035em) → abstract (18 px, max 640 px) → two pills → group line →
 full-width browser-frame mockup (`HeroMockup`, 16/8.2, max 860 px) with the dashboard video slot.
-Background: `WaveField`, a "flow-line" wave canvas (lattice of horizontal lines, points displaced by
-3-D Perlin noise, pushed by the pointer with spring tension/friction — the React-Bits "Waves" look,
-written inline, no dependency) under a gradient that fades to the section colour (0.2 → 0.75 at 70% → 1).
-Client component, DPR capped at 1.5, animates only while the hero is in view, one static frame under
-reduced motion. Props: lineColor, xGap, yGap, ampX, ampY, speed, cursorRadius, cursorMax.
+Background: the React Bits **Waves** component (`src/components/Waves.jsx` + `Waves.css`), added with
+`pnpm dlx shadcn@latest add @react-bits/Waves-JS-CSS` (registry copy, no npm dependency; `components.json`
+exists only for that CLI). Under it a gradient fades to the section colour (0.2 → 0.75 at 70% → 1).
+Props used in `Hero.tsx`: lineColor, waveSpeedX/Y, waveAmpX/Y, xGap, yGap, friction, tension, maxCursorMove.
 Layout: `Container` caps at 1720 px (`narrow` = 1152 px for text pages); hero text column 840 px.
 Reveal: transform-only slide on h1/abstract (LCP-safe), fade on badge/buttons; mockup drifts up with
 `animation-timeline: view()` where supported.
