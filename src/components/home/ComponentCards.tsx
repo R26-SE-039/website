@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
@@ -9,7 +8,7 @@ export default function ComponentCards() {
   return (
     <section className="dark-section py-24 md:py-32">
       <Container>
-        <div className="scroll-reveal grid gap-8 md:grid-cols-12 md:items-end">
+        <div className="grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
             <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-brand">Four components</p>
             <h2 className="mt-5 max-w-[620px] text-4xl font-bold leading-[1.05] text-white md:text-[3.25rem]">
@@ -30,8 +29,7 @@ export default function ComponentCards() {
           {researchComponents.map((c, i) => (
             <li
               key={c.no}
-              style={{ "--d": i } as CSSProperties}
-              className="scroll-reveal scroll-reveal-x group flex w-[85%] shrink-0 snap-start flex-col gap-4 rounded-2xl border border-navy-line bg-navy-2 px-6 py-8 sm:w-[60%] md:grid md:w-auto md:grid-cols-12 md:items-center md:gap-4 md:rounded-sm md:border-x-0 md:border-t-0 md:bg-transparent md:px-8 md:py-9 motion-safe:md:transition-[background-color,box-shadow] motion-safe:md:duration-300 md:hover:bg-white md:hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.6)] md:focus-within:bg-white"
+              className="group flex w-[85%] shrink-0 snap-start flex-col gap-4 rounded-2xl border border-navy-line bg-navy-2 px-6 py-8 sm:w-[60%] md:grid md:w-auto md:grid-cols-12 md:items-center md:gap-4 md:rounded-sm md:border-x-0 md:border-t-0 md:bg-transparent md:px-8 md:py-9 motion-safe:md:transition-[background-color,box-shadow] motion-safe:md:duration-300 md:hover:bg-white md:hover:shadow-[0_24px_60px_-30px_rgba(0,0,0,0.6)] md:focus-within:bg-white"
             >
               <p className="font-semibold text-brand motion-safe:transition-colors md:col-span-2 md:group-hover:text-navy md:group-focus-within:text-navy">
                 Stage 0{c.no}

@@ -12,7 +12,7 @@ import { site } from "@/data/site";
 export default function HeroMockup() {
   const video = site.heroVideo;
   return (
-    <div className="parallax-up mx-auto mt-12 w-full md:mt-14">
+    <div className="mx-auto mt-12 w-full md:mt-14">
       <div className="overflow-hidden rounded-[24px] border border-line bg-white shadow-[0_30px_80px_-40px_rgba(14,24,42,0.35)]">
         <div className="flex items-center gap-2 border-b border-line bg-surface px-5 py-3">
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-line" />

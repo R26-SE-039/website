@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import { Check, Compass, Minus, ScanSearch, ShieldOff, TrendingDown, X } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
@@ -45,8 +44,7 @@ export default function ResearchGap() {
             return (
               <li
                 key={gap}
-                style={{ "--d": i } as CSSProperties}
-                className="scroll-reveal group rounded-[24px] bg-white p-7"
+                className="group rounded-[24px] bg-white p-7"
               >
                 <span
                   aria-hidden="true"

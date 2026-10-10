@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import {
   BadgeCheck,
   Check,
@@ -33,16 +32,14 @@ export default function ResearchProblem() {
   return (
     <section id="research-problem" data-nav-section className="bg-white py-24 md:py-32">
       <Container>
-        <div className="scroll-reveal">
-          <SectionIntro
-            eyebrow="Domain · Research problem & solution"
-            title="The problem we set out to solve, and the loop that solves it."
-          />
-        </div>
+        <SectionIntro
+          eyebrow="Domain · Research problem & solution"
+          title="The problem we set out to solve, and the loop that solves it."
+        />
 
         {/* Problem */}
         <div className="mt-14 grid gap-10 lg:grid-cols-12 lg:gap-14">
-          <div className="scroll-reveal lg:col-span-5">
+          <div className="lg:col-span-5">
             <h3 className="text-xl font-bold text-ink">Proposed problem</h3>
             {problemNarrative.map((p) => (
               <p key={p.slice(0, 24)} className="mt-4 text-[17px] leading-relaxed text-muted">
@@ -63,8 +60,7 @@ export default function ResearchProblem() {
               return (
                 <li
                   key={pt.title}
-                  style={{ "--d": i } as CSSProperties}
-                  className="scroll-reveal group flex flex-col rounded-3xl border border-line bg-surface p-6"
+                  className="group flex flex-col rounded-3xl border border-line bg-surface p-6"
                 >
                   <div className="flex items-center justify-between">
                     <span
@@ -86,7 +82,7 @@ export default function ResearchProblem() {
         </div>
 
         {/* Solution */}
-        <div className="scroll-reveal relative mt-20 overflow-hidden rounded-3xl bg-navy p-7 text-white md:p-12">
+        <div className="relative mt-20 overflow-hidden rounded-3xl bg-navy p-7 text-white md:p-12">
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -top-32 -right-32 size-96 rounded-full border border-white/10"
@@ -114,8 +110,7 @@ export default function ResearchProblem() {
               return (
                 <li
                   key={d.title}
-                  style={{ "--d": i } as CSSProperties}
-                  className="scroll-reveal group rounded-2xl border border-white/10 bg-white/5 p-5"
+                  className="group rounded-2xl border border-white/10 bg-white/5 p-5"
                 >
                   <div className="flex items-center justify-between">
                     <span
@@ -136,13 +131,12 @@ export default function ResearchProblem() {
 
         {/* Research questions */}
         <div className="mt-20">
-          <h3 className="scroll-reveal text-xl font-bold text-ink">Research questions and results</h3>
+          <h3 className="text-xl font-bold text-ink">Research questions and results</h3>
           <ol className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
             {researchProblem.perComponent.map((q, i) => (
               <li
                 key={q.no}
-                style={{ "--d": i } as CSSProperties}
-                className="scroll-reveal flex flex-col rounded-3xl border border-line bg-white p-6"
+                className="flex flex-col rounded-3xl border border-line bg-white p-6"
               >
                 <p className="font-mono text-xs text-muted">
                   <span className="font-semibold text-ink">RQ{q.no}</span> · Component {q.no}

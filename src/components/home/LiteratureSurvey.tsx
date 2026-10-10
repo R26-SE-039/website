@@ -1,4 +1,3 @@
-import type { CSSProperties } from "react";
 import {
   ArrowRight,
   BookOpen,
@@ -47,17 +46,15 @@ export default function LiteratureSurvey() {
   return (
     <section id="literature-survey" data-nav-section className="bg-white py-24 md:py-32">
       <Container>
-        <div className="scroll-reveal">
-          <SectionIntro
-            eyebrow="Domain · Literature survey"
-            title="What the research already knows, and where it stops."
-            description="Five threads of recent work meet in this project. Each one solves a slice; the survey shows why the slices never joined up."
-          />
-        </div>
+        <SectionIntro
+          eyebrow="Domain · Literature survey"
+          title="What the research already knows, and where it stops."
+          description="Five threads of recent work meet in this project. Each one solves a slice; the survey shows why the slices never joined up."
+        />
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {/* Hub */}
-          <div className="scroll-reveal relative overflow-hidden rounded-[24px] bg-navy p-7 text-white sm:col-span-2 md:p-9 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:flex-col">
+          <div className="relative overflow-hidden rounded-[24px] bg-navy p-7 text-white sm:col-span-2 md:p-9 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:flex-col">
             <span
               aria-hidden="true"
               className="pointer-events-none absolute -right-24 -bottom-24 size-72 rounded-full border border-white/10"
@@ -100,9 +97,8 @@ export default function LiteratureSurvey() {
             return (
               <article
                 key={theme.id}
-                style={{ "--d": i + 1 } as CSSProperties}
                 className={cn(
-                  "scroll-reveal group relative flex flex-col rounded-[24px] border border-line bg-white p-6 hover:border-brand/70 hover:shadow-[0_22px_48px_-28px_rgba(14,24,42,0.4)] md:p-7 motion-safe:transition-[translate,box-shadow,border-color] motion-safe:duration-300 lg:motion-safe:hover:-translate-y-1.5",
+                  "group relative flex flex-col rounded-[24px] border border-line bg-white p-6 hover:border-brand/70 hover:shadow-[0_22px_48px_-28px_rgba(14,24,42,0.4)] md:p-7 motion-safe:transition-[translate,box-shadow,border-color] motion-safe:duration-300 lg:motion-safe:hover:-translate-y-1.5",
                   wide && "lg:grid lg:grid-cols-12 lg:gap-x-10 lg:p-8",
                   place.cell,
                 )}

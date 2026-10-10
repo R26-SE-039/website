@@ -1,45 +1,96 @@
+import { Code2, Mic, Network, Target, Wrench, type LucideIcon } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
+import { cn } from "@/lib/cn";
 import { researchComponents } from "@/data/components";
 import { mainObjective } from "@/data/domain";
+import { site } from "@/data/site";
 import type { ComponentNo } from "@/types/content";
+import TimelineProgress from "./TimelineProgress";
 
-const colors: Record<ComponentNo, string> = {
-  1: "var(--color-c1)",
-  2: "var(--color-c2)",
-  3: "var(--color-c3)",
-  4: "var(--color-c4)",
-};
+const icons: Record<ComponentNo, LucideIcon> = { 1: Mic, 2: Code2, 3: Wrench, 4: Network };
 
-/** Main objective, then the four component objectives on an alternating timeline. */
+/*
+  Main objective, then the four component objectives on an alternating timeline.
+  TimelineProgress fills the centre line as you scroll, and each numbered dot
+  lights up once the fill reaches it.
+*/
 export default function Objectives() {
   return (
     <section id="research-objectives" data-nav-section className="bg-surface py-24 md:py-32">
       <Container>
-        <SectionIntro eyebrow="Domain · Research objectives" title="One main objective, four component objectives." align="center" />
-        <p className="mx-auto mt-8 max-w-[840px] rounded-[24px] bg-white px-7 py-6 text-center text-lg font-medium leading-relaxed text-ink">
-          {mainObjective}
-        </p>
+        <SectionIntro
+          eyebrow="Domain · Research objectives"
+          title="One main objective, four component objectives."
+          align="center"
+        />
 
-        <ol className="relative mt-16 space-y-10 md:space-y-0">
-          {/* centre line */}
-          <span aria-hidden="true" className="absolute left-5 top-0 h-full w-px bg-line md:left-1/2 md:-translate-x-1/2" />
+        <div className="relative mx-auto mt-10 max-w-[880px] overflow-hidden rounded-3xl bg-navy px-7 py-8 text-center md:px-12 md:py-10">
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-24 -left-24 size-64 rounded-full border border-white/10"
+          />
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute -right-20 -bottom-20 size-52 rounded-full border border-brand/20"
+          />
+          <span
+            aria-hidden="true"
+            className="relative mx-auto grid size-12 place-items-center rounded-2xl bg-brand/15 text-brand"
+          >
+            <Target size={22} />
+          </span>
+          <p className="relative mt-4 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-brand">
+            Main objective
+          </p>
+          <p className="relative mt-3 text-lg font-medium leading-relaxed text-white md:text-xl">{mainObjective}</p>
+        </div>
+
+        <ol className="relative mt-16 space-y-8 md:space-y-0">
+          <TimelineProgress />
+
           {researchComponents.map((c, i) => {
             const right = i % 2 === 1;
+            const Icon = icons[c.no];
+            const result = site.highlights[i];
             return (
-              <li key={c.no} className="relative md:grid md:grid-cols-2 md:gap-16 md:py-8">
+              <li key={c.no} data-timeline-item className="group/item relative md:grid md:grid-cols-2 md:gap-16 md:py-8">
                 <span
                   aria-hidden="true"
-                  className="absolute left-5 top-1 grid h-10 w-10 -translate-x-1/2 place-items-center rounded-2xl font-mono text-xs font-bold text-white md:left-1/2 md:top-10"
-                  style={{ backgroundColor: colors[c.no] }}
+                  data-timeline-dot
+                  className="absolute top-6 left-5 z-10 grid size-10 -translate-x-1/2 place-items-center rounded-2xl border-2 border-line bg-white font-mono text-xs font-bold text-muted transition-[background-color,border-color,color,box-shadow] duration-300 data-[active=true]:border-brand data-[active=true]:bg-navy data-[active=true]:text-brand data-[active=true]:shadow-[0_0_0_6px_rgba(0,194,255,0.18)] md:top-14 md:left-1/2"
                 >
                   0{c.no}
                 </span>
-                <div className={`pl-14 md:pl-0 ${right ? "md:col-start-2 md:pl-12" : "md:pr-12 md:text-right"}`}>
-                  <p className="font-mono text-xs uppercase tracking-widest text-muted">Component {c.no} · {c.member}</p>
-                  <h3 className="mt-2 text-2xl font-bold leading-snug text-ink">{c.title}</h3>
-                  <p className="mt-3 text-[16px] leading-relaxed text-muted">{c.objective}</p>
-                </div>
+
+                <article
+                  className={cn(
+                    "group ml-14 rounded-3xl border border-line bg-white p-6 transition-[border-color,box-shadow] duration-500 md:ml-0 md:p-8 group-data-[active=true]/item:border-brand group-data-[active=true]/item:shadow-[0_24px_56px_-28px_rgba(0,194,255,0.65)]",
+                    right ? "md:col-start-2" : "md:col-start-1",
+                  )}
+                >
+                  <div className="flex items-start justify-between gap-4">
+                    <span
+                      aria-hidden="true"
+                      className="grid size-11 shrink-0 place-items-center rounded-2xl bg-brand/15 text-ink group-hover:bg-navy group-hover:text-brand group-data-[active=true]/item:bg-navy group-data-[active=true]/item:text-brand motion-safe:transition-[background-color,color,rotate,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-6"
+                    >
+                      <Icon size={20} />
+                    </span>
+                    <span className="rounded-full bg-navy px-2.5 py-0.5 font-mono text-[11px] font-semibold text-white">
+                      Component {c.no}
+                    </span>
+                  </div>
+                  <h3 className="mt-5 text-2xl font-bold leading-snug text-ink">{c.title}</h3>
+                  <p className="mt-1 text-sm text-muted">{c.member}</p>
+                  <p className="mt-4 text-[16px] leading-relaxed text-muted">{c.objective}</p>
+
+                  {result && (
+                    <div className="mt-6 flex items-center gap-4 rounded-2xl bg-surface px-5 py-4 transition-colors duration-500 group-data-[active=true]/item:bg-brand/10">
+                      <span className="shrink-0 text-2xl font-bold tracking-tight text-ink">{result.value}</span>
+                      <span className="text-sm leading-snug text-muted">{result.note}</span>
+                    </div>
+                  )}
+                </article>
               </li>
             );
           })}
