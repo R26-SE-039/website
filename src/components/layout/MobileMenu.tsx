@@ -2,15 +2,21 @@
 
 import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useSyncExternalStore } from "react";
+import { createPortal } from "react-dom";
 import type { NavItem } from "@/types/content";
 import { cn } from "@/lib/cn";
 
 type Props = { items: NavItem[]; pathname: string };
 
+// Hydration-safe "is the DOM available" flag for the portal (false on the server, true after mount).
+const noop = () => () => {};
+const useMounted = () => useSyncExternalStore(noop, () => true, () => false);
+
 export default function MobileMenu({ items, pathname }: Props) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
+  const mounted = useMounted();
 
   useEffect(() => {
     if (!open) return;
@@ -37,11 +43,13 @@ export default function MobileMenu({ items, pathname }: Props) {
       >
         {open ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
       </button>
-      <div
-        id="mobile-menu"
-        hidden={!open}
-        className="fixed inset-x-0 bottom-0 top-16 z-40 overflow-y-auto border-t border-line bg-white px-5 py-6"
-      >
+      {mounted &&
+        createPortal(
+          <div
+            id="mobile-menu"
+            hidden={!open}
+            className="fixed inset-x-0 bottom-0 top-16 z-[70] overflow-y-auto border-t border-line bg-white px-5 py-6 md:hidden"
+          >
         <ul className="space-y-1">
           {items.map((item) => {
             const href = item.href.replace(/\/+$/, "") || "/";
@@ -103,7 +111,9 @@ export default function MobileMenu({ items, pathname }: Props) {
             );
           })}
         </ul>
-      </div>
+          </div>,
+          document.body,
+        )}
     </div>
   );
 }
