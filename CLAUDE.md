@@ -162,30 +162,25 @@ website/
 
 ---
 
-## 7. Site map and navigation
+## 7. Site map and navigation (one-page site, decided Oct 2026)
 
-| Nav item | Route | Dropdown |
+All seven required sections live on the **home page** as anchored sections; the tabs jump to them.
+Section ids: `top` (hero, stats, loop, components) · `literature-survey` · `research-gap` ·
+`research-problem` · `research-objectives` · `methodology` · `technologies` · `milestones`
+(each milestone `<details id="<milestone id>">`) · `documents` · `presentations` · `about` · `contact`.
+
+| Nav item | Href | Dropdown |
 |---|---|---|
-| Home | `/` | — |
-| Domain ▾ | `/domain/` | Literature Survey · Research Gap · Research Problem · Research Objectives · Methodology · Technologies (anchor links) |
-| Milestones ▾ | `/milestones/` | One entry per milestone → `/milestones/#<id>` (opens that item) |
-| Documents | `/documents/` | — |
-| Presentations | `/presentations/` | — |
-| About Us | `/about/` | — |
-| Contact Us | `/contact/` | — |
+| Home | `/#top` | — |
+| Domain ▾ | `/#literature-survey` | the six Domain anchors |
+| Milestones ▾ | `/#milestones` | one entry per milestone → `/#<id>` (`OpenFromHash` opens it) |
+| Documents / Presentations / About Us / Contact Us | `/#documents` … | — |
 
-Navigation rules (from the guidelines):
-- Identical navbar on every page, sticky, translucent with backdrop blur.
-- **Active page is highlighted** so visitors always know where they are.
-- Logo/title always links back to Home.
-- Desktop: dropdowns open on hover **and** click, close on `Esc` / outside click,
-  use `aria-expanded` and `aria-controls`. Mobile (< 768 px): hamburger → full-height panel with
-  the same items; dropdowns become expandable groups.
-- Footer on every page: project name, group ID, SLIIT, quick links to all sections,
-  contact email, © 2026.
-- Long pages (Domain) show a back-to-top button after scrolling.
-
----
+Navigation rules: identical sticky translucent navbar; **scroll-spy** highlights the tab of the section in
+view (`data-nav-section` + `sectionToNav` in `src/data/nav.ts`); logo returns to `#top`; dropdowns open on
+hover and click, close on Esc / outside click; mobile hamburger panel is portalled to `body` (the header's
+backdrop blur would otherwise clip it); footer lists all sections; back-to-top after scrolling.
+Separate routes were removed; `not-found.tsx` remains.
 
 ## 8. Design system
 

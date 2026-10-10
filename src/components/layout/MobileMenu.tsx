@@ -7,13 +7,13 @@ import { createPortal } from "react-dom";
 import type { NavItem } from "@/types/content";
 import { cn } from "@/lib/cn";
 
-type Props = { items: NavItem[]; pathname: string };
+type Props = { items: NavItem[]; activeHref: string };
 
 // Hydration-safe "is the DOM available" flag for the portal (false on the server, true after mount).
 const noop = () => () => {};
 const useMounted = () => useSyncExternalStore(noop, () => true, () => false);
 
-export default function MobileMenu({ items, pathname }: Props) {
+export default function MobileMenu({ items, activeHref }: Props) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
   const mounted = useMounted();
@@ -52,8 +52,7 @@ export default function MobileMenu({ items, pathname }: Props) {
           >
         <ul className="space-y-1">
           {items.map((item) => {
-            const href = item.href.replace(/\/+$/, "") || "/";
-            const active = href === "/" ? pathname === "/" : pathname.startsWith(href);
+            const active = item.href === activeHref;
             if (!item.children) {
               return (
                 <li key={item.href}>
@@ -61,7 +60,7 @@ export default function MobileMenu({ items, pathname }: Props) {
                     prefetch={false}
                     href={item.href}
                     onClick={close}
-                    aria-current={active ? "page" : undefined}
+                    aria-current={active ? "location" : undefined}
                     className={cn(
                       "block rounded-xl px-4 py-3 text-base font-medium",
                       active ? "bg-surface-2 text-ink" : "text-muted hover:bg-surface hover:text-ink",

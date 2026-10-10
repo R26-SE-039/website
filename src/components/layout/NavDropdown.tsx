@@ -40,7 +40,7 @@ export default function NavDropdown({ item, active }: Props) {
         <Link
           prefetch={false}
           href={item.href}
-          aria-current={active ? "page" : undefined}
+          aria-current={active ? "location" : undefined}
           className={cn(
             "rounded-full py-2 pl-3 pr-1 text-sm font-medium transition-colors",
             active ? "text-ink" : "text-muted hover:text-ink",

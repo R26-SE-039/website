@@ -107,3 +107,18 @@ export const technologies: TechCategory[] = [
   { category: "DevOps & Cloud", items: [{ name: "Docker" }, { name: "Caddy" }, { name: "AWS EC2" }, { name: "GitHub Actions" }, { name: "Vercel" }] },
   { category: "TODO: other components", items: [{ name: "TODO: add technologies of C1, C3, C4" }] },
 ];
+
+export const literatureInsight = {
+  headline: "Every ingredient exists, nobody closes the loop.",
+  text: "Generators that never see the application, agents without a stopping rule, validation that trusts the generator, and results that are never compared with predictions.",
+};
+
+export const problemNarrative = [
+  "Agile teams capture requirements in sprint conversations faster than QA engineers can turn them into automated tests. Requirements live in meeting notes, test cases are derived by hand, scripts are hand-coded, failures are triaged manually and traceability is a spreadsheet.",
+  "Every hand-off loses information and time, and the resulting scripts decay as soon as the interface changes, because their locators are hard-coded. Teams ship faster than they can prove that what they ship still works.",
+];
+
+export const solutionNarrative = [
+  "NextGen QA treats the whole path as one closed loop. Component 1 listens to the sprint meeting and produces structured user stories. Component 2 turns those stories into Gherkin scenarios and executable Playwright, Selenium and Cypress suites grounded in the real DOM, explores the application with a vision-guided agent, validates every generated artefact with static checks and an independent LLM judge, and runs the suites in CI/CD.",
+  "Component 3 classifies the failures that come back and heals broken locators, proposing repairs through GitHub. Component 4 keeps a live requirements traceability matrix and predicts quality from the signals the other components emit. Results flow back to the start, so the next sprint begins with evidence rather than assumptions.",
+];

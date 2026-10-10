@@ -16,6 +16,8 @@ export const site = {
     poster: "", // optional: /images/dashboard-poster.webp (1280x720, <= 80 KB)
     caption: "NextGen QA dashboard — story to validated test",
   },
+  // Product introduction video (YouTube). Set the 11-character id to show it; empty = "coming soon".
+  introVideo: { youtubeId: "", title: "Product introduction — NextGen QA" },
   year: 2026,
   institution: "Sri Lanka Institute of Information Technology (SLIIT)",
   faculty: "Faculty of Computing",

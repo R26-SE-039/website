@@ -20,7 +20,7 @@ const THRESHOLD = Number(process.env.LH_THRESHOLD ?? 95);
 // `--runs=3` (used by `pnpm check`) or LH_RUNS=3; default is one quick run.
 const runsArg = process.argv.find((a) => a.startsWith("--runs="))?.split("=")[1];
 const RUNS = Math.max(1, Number(runsArg ?? process.env.LH_RUNS ?? 1));
-const ROUTES = (process.env.LH_ROUTES ?? "/,/domain/,/milestones/,/documents/,/presentations/,/about/,/contact/").split(",");
+const ROUTES = (process.env.LH_ROUTES ?? "/").split(",");
 const CATEGORIES = ["performance", "accessibility", "best-practices", "seo"];
 
 if (!existsSync(OUT)) {
