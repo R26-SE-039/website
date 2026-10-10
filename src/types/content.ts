@@ -68,6 +68,8 @@ export interface LiteratureTheme {
   id: string;
   title: string;
   summary: string;
+  gap: string; // where this line of work stops
+  components: ComponentNo[]; // which NextGen QA components answer the gap
   references: string[];
 }
 

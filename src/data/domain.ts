@@ -1,47 +1,51 @@
 import type { GapRow, LiteratureTheme, TechCategory } from "@/types/content";
 
+// The five literature-review threads of the research paper (docs/Research_Paper_New (2).pdf, §II-A).
 export const literature: LiteratureTheme[] = [
   {
-    id: "bdd",
-    title: "Requirements-to-test and BDD scenario generation",
+    id: "requirements",
+    title: "Requirements engineering and traceability",
     summary:
-      "Gherkin gives a structured, executable specification that non-programmers can read. Rule-based converters are reliable on constrained text but brittle on free text; LLM-based generation reads well but misses negative paths and produces steps that are not observable. Hybrid template-first generation with human approval is the recommended design.",
-    references: ["North (2006)", "Wynne et al. (2017)", "Wang et al. (2024)"],
+      "Traceability links requirements to downstream artefacts, Agile teams express functional requirements as user stories, and INVEST gives the criteria for a good story.",
+    gap: "These methods assume requirements are already written down. In real teams they are negotiated in meetings, incomplete and changing, so they must be captured from conversation, conflict-checked and validated.",
+    components: [1],
+    references: ["Gotel & Finkelstein (1994)", "Cohn (2004)", "Wake (2003)"],
   },
   {
     id: "llm-testgen",
-    title: "LLM-based test code generation",
+    title: "LLMs for software testing",
     summary:
-      "TestPilot, ChatUniTest and CodaMosa show that first-shot LLM tests often fail to compile or pass trivially, and that a validate-and-repair loop drives quality. For UI tests, hallucinated selectors dominate failures and grounding the prompt in real page structure improves executability.",
-    references: ["Schäfer et al. (2024)", "Xie et al. (2024)", "Lemieux et al. (2023)"],
+      "LLMs generate unit tests from code and natural language, CodaMosa uses them to escape coverage plateaus, and retrieval-augmented generation grounds output in application-specific context.",
+    gap: "Generated tests still carry incorrect selectors, incomplete assertions or scenarios that misrepresent the requirement, so they need grounding in the real application and verification by execution.",
+    components: [2],
+    references: ["Schäfer et al. (2024)", "Lemieux et al. (2023)", "Lewis et al. (2020)"],
   },
   {
     id: "agents",
-    title: "GUI and web agents: Set-of-Mark, multi-role reasoning, reflexion",
+    title: "Agentic exploration and visual grounding",
     summary:
-      "Set-of-Mark prompting lets a vision model refer to UI elements by number; WebVoyager and AppAgent explore interfaces autonomously; Reflexion improves agents with verbal self-reflection. None of them decides when exploration has covered enough of an application to stop.",
-    references: ["Yang et al. (2023)", "He et al. (2024)", "Zhang et al. (2023)", "Shinn et al. (2023)"],
+      "ReAct combines reasoning with action, WebArena benchmarks autonomous web agents, Set-of-Mark improves visual grounding over numbered UI elements, and Reflexion adds memory of past mistakes.",
+    gap: "These agents aim to finish a task, not to cover an application. Testing needs explicit state tracking, failure memory and a coverage-based rule for when to stop.",
+    components: [2],
+    references: ["Yao et al. (2023)", "Zhou et al. (2024)", "Yang et al. (2023)", "Shinn et al. (2023)"],
   },
   {
-    id: "prioritisation",
-    title: "Test prioritisation and risk prediction",
+    id: "repair",
+    title: "CI/CD failure analysis and program repair",
     summary:
-      "APFD is the standard metric for test ordering; machine-learning prioritisation predicts failure probability from history and features, with random forests common on small tabular data. The cold-start problem makes early risk models dependent on bootstrapped data.",
-    references: ["Rothermel et al. (2001)", "Elbaum et al. (2002)", "Pan et al. (2022)"],
+      "CI failures come from tests, dependencies, configuration, infrastructure and application defects, and LLM repair agents show that repository-level repair is increasingly feasible, while SWE-bench shows how hard it remains.",
+    gap: "Giving an agent write access raises security and reliability risks. Safe self-healing needs explicit authorisation, restricted permissions and a policy that separates diagnosis from permission to change code.",
+    components: [3],
+    references: ["Rausch et al. (2017)", "Bouzenia et al. (2024)", "Jimenez et al. (2024)"],
   },
   {
-    id: "validation",
-    title: "Validation of LLM output: static checks and LLM-as-a-judge",
+    id: "quality",
+    title: "Test quality, prioritisation and coverage",
     summary:
-      "Deterministic checks catch what can be proven from text; a second model can grade output against a rubric but shows self-enhancement bias when it judges its own generator, so the judge should be a different model with a fixed rubric and line-anchored, actionable findings.",
-    references: ["Zheng et al. (2023)", "Bacchelli and Bird (2013)"],
-  },
-  {
-    id: "todo-others",
-    title: "TODO: literature for Components 1, 3 and 4",
-    summary:
-      "TODO: team members to add their literature themes (speech-to-requirement extraction, failure classification and self-healing, requirements traceability and quality prediction).",
-    references: [],
+      "Mutation testing estimates fault-detection power, risk-based testing ranks work by impact and likelihood, and APFD measures how quickly a test order finds faults.",
+    gap: "Quality scores, coverage and traceability are usually separate artefacts. An integrated lifecycle has to keep them linked to requirements, tests, execution results and approvals.",
+    components: [4],
+    references: ["Jia & Harman (2011)", "Amland (2000)", "Rothermel et al. (2001)"],
   },
 ];
 
@@ -133,7 +137,9 @@ export const technologies: TechCategory[] = [
 
 export const literatureInsight = {
   headline: "Every ingredient exists, nobody closes the loop.",
-  text: "Generators that never see the application, agents without a stopping rule, validation that trusts the generator, and results that are never compared with predictions.",
+  text: "Existing work starts from documented rather than spoken requirements, generates tests that never see the application, explores for task completion instead of coverage, gives repair agents autonomy without safety governance, and keeps traceability, quality and coverage apart from execution evidence.",
+  // The paper's answer: one continuous workflow (§II-B).
+  loop: ["Elicitation", "Story validation", "Test generation", "Exploration", "Execution", "Failure analysis", "Self-healing", "Traceability"],
 };
 
 export const problemNarrative = [
