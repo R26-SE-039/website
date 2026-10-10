@@ -19,7 +19,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-50 border-b border-line/70 bg-white/85 backdrop-blur-md">
-      <nav aria-label="Main" className="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-5 md:h-[72px] md:px-8">
+      <nav aria-label="Main" className="mx-auto flex h-16 w-full max-w-[1720px] items-center justify-between px-5 md:h-[72px] md:px-14">
         <Link prefetch={false} href="/" className="flex items-center rounded-full">
           <Logo />
         </Link>

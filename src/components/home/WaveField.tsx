@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 
 /**
  * Flow-line wave background (the "Waves" effect seen on product sites):
- * a lattice of horizontal lines whose points drift with 3-D Perlin noise and
+ * closely spaced vertical lines whose points drift with 3-D Perlin noise and
  * are pushed by the pointer with a spring, so the field bends and settles
  * around the cursor. Plain canvas, no dependency.
  */
@@ -57,8 +57,8 @@ type Point = { x: number; y: number; wx: number; wy: number; cx: number; cy: num
 
 type Props = {
   lineColor?: string;
-  xGap?: number; // px between points along a line
-  yGap?: number; // px between lines
+  xGap?: number; // px between vertical lines (small gap)
+  yGap?: number; // px between points along a line
   ampX?: number;
   ampY?: number;
   speed?: number;
@@ -68,10 +68,10 @@ type Props = {
 
 export default function WaveField({
   lineColor = "rgba(14, 24, 42, 0.09)",
-  xGap = 14,
-  yGap = 30,
-  ampX = 36,
-  ampY = 18,
+  xGap = 12,
+  yGap = 32,
+  ampX = 32,
+  ampY = 16,
   speed = 0.012,
   cursorRadius = 190,
   cursorMax = 110,
@@ -104,12 +104,13 @@ export default function WaveField({
       canvas.height = Math.floor(height * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       lines = [];
-      const rows = Math.ceil(height / yGap) + 2;
+      // One line per column, points running top to bottom.
       const cols = Math.ceil(width / xGap) + 2;
-      for (let r = 0; r < rows; r++) {
+      const rows = Math.ceil(height / yGap) + 2;
+      for (let c = 0; c < cols; c++) {
         const pts: Point[] = [];
-        for (let c = 0; c < cols; c++) {
-          pts.push({ x: c * xGap - xGap, y: r * yGap, wx: 0, wy: 0, cx: 0, cy: 0, vx: 0, vy: 0 });
+        for (let r = 0; r < rows; r++) {
+          pts.push({ x: c * xGap - xGap, y: r * yGap - yGap, wx: 0, wy: 0, cx: 0, cy: 0, vx: 0, vy: 0 });
         }
         lines.push(pts);
       }
@@ -118,7 +119,7 @@ export default function WaveField({
     const move = () => {
       for (const pts of lines) {
         for (const p of pts) {
-          const n = noise3(p.x * 0.0022, p.y * 0.0035, t) * 12;
+          const n = noise3(p.x * 0.002, p.y * 0.0015, t) * 12;
           p.wx = Math.cos(n) * ampX;
           p.wy = Math.sin(n) * ampY;
 
