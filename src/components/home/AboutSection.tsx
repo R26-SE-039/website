@@ -22,6 +22,7 @@ type Link = { label: string; href: string; icon?: BrandSlug };
 type Person = {
   name: string;
   badge: string;
+  highlight?: boolean; // brand-coloured badge (group leader)
   facts: { label?: string; value: string }[];
   email: string;
   photo?: string;
@@ -65,7 +66,13 @@ function PersonCard({ p }: { p: Person }) {
       <div className="flex flex-1 flex-col p-6">
         <h3 className="text-lg font-bold leading-snug text-ink">{p.name}</h3>
         <p className="mt-2">
-          <span className="inline-flex rounded-md bg-navy px-2 py-0.5 text-[11px] font-semibold text-white">
+          <span
+            className={
+              p.highlight
+                ? "inline-flex rounded-md bg-brand px-2 py-0.5 text-[11px] font-semibold text-brand-ink"
+                : "inline-flex rounded-md bg-navy px-2 py-0.5 text-[11px] font-semibold text-white"
+            }
+          >
             {p.badge}
           </span>
         </p>
@@ -129,7 +136,8 @@ const supervisorCards: Person[] = supervisors.map((s) => ({
 
 const memberCards: Person[] = team.map((m) => ({
   name: m.name,
-  badge: "Group Member",
+  badge: m.leader ? "Group Leader" : "Group Member",
+  highlight: m.leader,
   facts: [
     { label: "Undergraduate", value: `${site.institution} · ${m.studentId}` },
     { label: "Department", value: department },

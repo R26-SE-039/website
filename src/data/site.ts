@@ -8,13 +8,13 @@ export const site = {
   heroDescription:
     "NextGen QA turns meeting speech into user stories, generates and independently validates executable UI tests, heals the ones that break, and traces every requirement to its result.",
   // Dashboard recording shown in the hero frame. Add the file manually to
-  // public/video/dashboard.mp4 (keep it short, 720p, < 6 MB) and set enabled: true.
+  // public/video/dashboard.mp4 (1280x624, short, < 6 MB) and set enabled: true.
   // public/video/ is git-ignored on purpose (no large binaries in the repo).
   heroVideo: {
-    enabled: false,
+    enabled: true,
     src: "/video/dashboard.mp4",
-    poster: "", // optional: /images/dashboard-poster.webp (1280x720, <= 80 KB)
-    caption: "NextGen QA dashboard — story to validated test",
+    poster: "/images/dashboard-poster.webp", // first frame, 1280x624
+    caption: "NextGen QA dashboard",
   },
   // Product introduction video (YouTube). Set the 11-character id to show it; empty = "coming soon".
   introVideo: { youtubeId: "", title: "Product introduction — NextGen QA" },

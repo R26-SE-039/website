@@ -24,7 +24,7 @@ export default function HeroMockup() {
         </div>
         {video.enabled ? (
           <video
-            className="block aspect-[16/8.2] max-h-[860px] w-full bg-[#0a1626] object-cover"
+            className="block aspect-[1280/624] max-h-[860px] w-full bg-white object-cover"
             src={asset(video.src)}
             poster={video.poster ? asset(video.poster) : undefined}
             autoPlay

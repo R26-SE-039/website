@@ -15,6 +15,7 @@ export interface Member {
   studentId: string;
   component: ComponentNo;
   email: string;
+  leader?: boolean; // shows the "Group Leader" badge
   photo?: string; // path under public/, used through asset(); omitted → initials avatar
   phone?: string;
   github?: string;

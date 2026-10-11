@@ -215,7 +215,7 @@ ink and one cyan accent; selected sections flip to dark navy with the `.dark-sec
 Rules: one accent (`brand`) per screen; green/amber only carry status meaning;
 component colours appear only where a component is identified (loop diagram, stage rows, badges).
 Buttons: primary = cyan pill with navy text; secondary = navy outline; `navy` = filled navy (navbar CTA).
-Logo: `<Logo/>` text wordmark "NEXTGEN ▪ QA" in Space Grotesk; no image logo yet.
+Logo: `<Logo/>` = QA mark (`public/logos/qa-mark.webp`, trimmed from `qa-logo-freelogovectors.png`) + "NEXTGEN QA" wordmark in Space Grotesk. Favicons: `src/app/favicon.ico`, `icon.png`, `apple-icon.png` from the same mark.
 
 ### Hero (implemented)
 Badge pill → h1 (56–64 px, −0.035em) → abstract (18 px, max 640 px) → two pills → group line →
