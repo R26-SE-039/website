@@ -7,9 +7,8 @@ export const site = {
   heroTitle: "From sprint conversation to self-healing test, in one closed loop.",
   heroDescription:
     "NextGen QA turns meeting speech into user stories, generates and independently validates executable UI tests, heals the ones that break, and traces every requirement to its result.",
-  // Dashboard recording shown in the hero frame. Add the file manually to
-  // public/video/dashboard.mp4 (1280x624, short, < 6 MB) and set enabled: true.
-  // public/video/ is git-ignored on purpose (no large binaries in the repo).
+  // Dashboard recording shown in the hero frame: public/video/dashboard.mp4 (1280x624, H.264, no audio,
+  // ~250 KB). It is the only committed file in public/video/ (see .gitignore) so Vercel can serve it.
   heroVideo: {
     enabled: true,
     src: "/video/dashboard.mp4",
