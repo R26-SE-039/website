@@ -78,7 +78,7 @@ export default function Navbar() {
           <Link
             prefetch={false}
             href="/#contact"
-            className="hidden min-h-11 items-center rounded-full bg-navy px-6 text-sm font-semibold text-white transition-colors hover:bg-[#1b2a44] md:inline-flex"
+            className="hidden min-h-11 items-center rounded-full bg-cta px-6 text-sm font-semibold text-white transition-colors hover:bg-cta-hover md:inline-flex"
           >
             Contact Us
           </Link>

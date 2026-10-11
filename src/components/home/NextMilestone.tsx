@@ -20,13 +20,13 @@ export default function NextMilestone() {
               <CalendarClock size={20} />
             </span>
             <div>
-              <p className="font-mono text-xs uppercase tracking-widest text-muted">Next milestone</p>
+              <p className="text-xs uppercase tracking-widest text-muted">Next milestone</p>
               <p className="mt-1 text-lg font-semibold text-ink">{next.title}</p>
               <p className="mt-1 text-sm text-muted">{next.summary}</p>
             </div>
           </div>
           <div className="flex items-center gap-4 md:shrink-0">
-            <span className="font-mono text-sm text-muted">{next.date}</span>
+            <span className="text-sm text-muted">{next.date}</span>
             <StatusBadge status={next.status} />
             <ArrowRight size={18} aria-hidden="true" className="text-ink transition-transform group-hover:translate-x-1" />
           </div>

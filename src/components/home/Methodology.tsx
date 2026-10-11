@@ -53,7 +53,7 @@ export default function Methodology() {
                 <li key={s.title} className="group relative flex gap-5 pb-6 last:pb-0">
                   <span
                     aria-hidden="true"
-                    className="relative grid size-8 shrink-0 place-items-center rounded-xl bg-brand/15 font-mono text-xs font-bold text-ink ring-4 ring-white group-hover:bg-navy group-hover:text-brand motion-safe:transition-[background-color,color,rotate,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-6"
+                    className="relative grid size-8 shrink-0 place-items-center rounded-xl bg-brand/15 text-xs font-bold text-ink ring-4 ring-white group-hover:bg-navy group-hover:text-brand motion-safe:transition-[background-color,color,rotate,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110 motion-safe:group-hover:-rotate-6"
                   >
                     {i + 1}
                   </span>

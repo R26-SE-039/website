@@ -18,7 +18,7 @@ export default function HeroMockup() {
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-line" />
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-line" />
           <span aria-hidden="true" className="h-2.5 w-2.5 rounded-full bg-line" />
-          <span className="ml-3 hidden rounded-full border border-line bg-white px-3 py-1 font-mono text-[11px] text-muted sm:inline">
+          <span className="ml-3 hidden rounded-full border border-line bg-white px-3 py-1 text-[11px] text-muted sm:inline">
             {video.caption}
           </span>
         </div>
@@ -50,7 +50,7 @@ export default function HeroMockup() {
               <div className="mt-6 grid grid-cols-2 gap-3 md:grid-cols-4">
                 {["Stories", "Gherkin", "Validation", "Executions"].map((label, i) => (
                   <div key={label} className="rounded-2xl border border-line bg-surface p-4">
-                    <p className="font-mono text-[10px] uppercase tracking-widest text-muted">{label}</p>
+                    <p className="text-[10px] uppercase tracking-widest text-muted">{label}</p>
                     <div className="mt-3 h-2 rounded-full bg-line">
                       <div className="h-2 rounded-full bg-brand" style={{ width: `${[72, 100, 58, 85][i]}%` }} />
                     </div>

@@ -40,7 +40,7 @@ export default function Objectives() {
           >
             <Target size={22} />
           </span>
-          <p className="relative mt-4 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-brand">
+          <p className="relative mt-4 text-xs font-semibold uppercase tracking-[0.14em] text-brand">
             Main objective
           </p>
           <p className="relative mt-3 text-lg font-medium leading-relaxed text-white md:text-xl">{mainObjective}</p>
@@ -58,7 +58,7 @@ export default function Objectives() {
                 <span
                   aria-hidden="true"
                   data-timeline-dot
-                  className="absolute top-6 left-5 z-10 grid size-10 -translate-x-1/2 place-items-center rounded-2xl border-2 border-line bg-white font-mono text-xs font-bold text-muted transition-[background-color,border-color,color,box-shadow] duration-300 data-[active=true]:border-brand data-[active=true]:bg-navy data-[active=true]:text-brand data-[active=true]:shadow-[0_0_0_6px_rgba(0,194,255,0.18)] md:top-14 md:left-1/2"
+                  className="absolute top-6 left-5 z-10 grid size-10 -translate-x-1/2 place-items-center rounded-2xl border-2 border-line bg-white text-xs font-bold text-muted transition-[background-color,border-color,color,box-shadow] duration-300 data-[active=true]:border-brand data-[active=true]:bg-navy data-[active=true]:text-brand data-[active=true]:shadow-[0_0_0_6px_rgba(0,194,255,0.18)] md:top-14 md:left-1/2"
                 >
                   0{c.no}
                 </span>
@@ -76,7 +76,7 @@ export default function Objectives() {
                     >
                       <Icon size={20} />
                     </span>
-                    <span className="rounded-full bg-navy px-2.5 py-0.5 font-mono text-[11px] font-semibold text-white">
+                    <span className="rounded-full bg-navy px-2.5 py-0.5 text-[11px] font-semibold text-white">
                       Component {c.no}
                     </span>
                   </div>

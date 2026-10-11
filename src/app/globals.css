@@ -14,7 +14,9 @@
   --color-muted: #4a5a72; /* secondary text */
   --color-brand: #00c2ff; /* cyan accent: primary buttons, highlights */
   --color-brand-ink: #0e182a; /* text on cyan */
-  --color-navy: #0e182a; /* dark sections, navbar CTA */
+  --color-navy: #0e182a; /* dark sections */
+  --color-cta: #0072dd; /* logo blue, darkened for AA with white text (4.7:1); navbar CTA */
+  --color-cta-hover: #005fb8;
   --color-navy-2: #152238; /* dark section cards */
   --color-navy-line: rgba(255, 255, 255, 0.1);
   --color-on-navy: #ffffff;
@@ -27,7 +29,6 @@
   --color-c4: #14b8a6; /* Component 4 */
   --font-sans: var(--font-inter-tight);
   --font-logo: var(--font-space-grotesk);
-  --font-mono: var(--font-geist-mono);
 }
 
 html {

@@ -66,7 +66,7 @@ export default function LiteratureSurvey() {
             <span aria-hidden="true" className="grid size-12 place-items-center rounded-2xl bg-brand/15 text-brand">
               <BookOpen size={22} />
             </span>
-            <p className="mt-6 font-mono text-xs font-semibold uppercase tracking-[0.14em] text-brand">The gap</p>
+            <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-brand">The gap</p>
             <p className="mt-3 text-2xl font-bold leading-snug md:text-[1.75rem]">{literatureInsight.headline}</p>
             <p className="mt-4 text-base leading-relaxed text-on-navy-muted">{literatureInsight.text}</p>
 
@@ -119,13 +119,13 @@ export default function LiteratureSurvey() {
                       {theme.components.map((c) => (
                         <span
                           key={c}
-                          className="rounded-full bg-navy px-2.5 py-0.5 font-mono text-[11px] font-semibold text-white"
+                          className="rounded-full bg-navy px-2.5 py-0.5 text-[11px] font-semibold text-white"
                           title={`Answered by Component ${c}`}
                         >
                           C{c}
                         </span>
                       ))}
-                      <span className="font-mono text-xs text-muted">0{i + 1}</span>
+                      <span className="text-xs text-muted">0{i + 1}</span>
                     </span>
                   </div>
 
@@ -135,7 +135,7 @@ export default function LiteratureSurvey() {
 
                 <div className={cn("mt-5 flex flex-1 flex-col", wide && "lg:col-span-7 lg:mt-0")}>
                   <div className={cn("rounded-r-2xl border-l-2 border-brand bg-surface px-4 py-3.5", !wide && "flex-1")}>
-                    <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.12em] text-ink">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink">
                       Where it stops
                     </p>
                     <p className="mt-1.5 text-sm leading-relaxed text-muted">{theme.gap}</p>
@@ -146,7 +146,7 @@ export default function LiteratureSurvey() {
                       {theme.references.map((r) => (
                         <li
                           key={r}
-                          className="rounded-full border border-line bg-white px-2.5 py-1 font-mono text-[11px] text-muted"
+                          className="rounded-full border border-line bg-white px-2.5 py-1 text-[11px] text-muted"
                         >
                           {r}
                         </li>

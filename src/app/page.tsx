@@ -5,7 +5,6 @@ import DocumentsSection from "@/components/home/DocumentsSection";
 import Hero from "@/components/home/Hero";
 import Highlights from "@/components/home/Highlights";
 import LiteratureSurvey from "@/components/home/LiteratureSurvey";
-import LoopDiagram from "@/components/home/LoopDiagram";
 import Methodology from "@/components/home/Methodology";
 import MilestonesSection from "@/components/home/MilestonesSection";
 import Objectives from "@/components/home/Objectives";
@@ -20,7 +19,6 @@ export default function HomePage() {
       <div id="top" data-nav-section>
         <Hero />
         <Highlights />
-        <LoopDiagram />
         <ComponentCards />
       </div>
       <LiteratureSurvey />

@@ -10,7 +10,7 @@ const resources = [
   { label: "GitHub organisation", href: site.links.github, icon: Code2 },
 ];
 
-const heading = "mb-4 font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-brand";
+const heading = "mb-4 text-[11px] font-semibold uppercase tracking-[0.14em] text-brand";
 
 export default function Footer() {
   return (

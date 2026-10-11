@@ -33,7 +33,7 @@ export default function Hero() {
 
       <div className="relative mx-auto w-full max-w-[1720px] px-5 py-16 md:px-14 md:py-16">
         <div className="mx-auto max-w-[840px] text-center">
-          <span className="reveal-fade inline-flex items-center gap-2 rounded-full border-[1.5px] border-line px-4 py-2 font-mono text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
+          <span className="reveal-fade inline-flex items-center gap-2 rounded-full border-[1.5px] border-line px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
             {site.heroBadge}
           </span>
           <h1 className="reveal-slide reveal-d1 mx-auto mt-7 text-[2.5rem] font-bold leading-[1.1] tracking-[-0.035em] text-ink sm:text-5xl md:text-[3.5rem]">

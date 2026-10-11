@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist_Mono, Inter_Tight, Space_Grotesk } from "next/font/google";
+import { Inter_Tight, Space_Grotesk } from "next/font/google";
 import type { ReactNode } from "react";
 import BackToTop from "@/components/layout/BackToTop";
 import Footer from "@/components/layout/Footer";
@@ -11,10 +11,9 @@ import "./globals.css";
 // connections instead of swapping late, which would re-paint the hero text
 // and push LCP out under Lighthouse's mobile throttling.
 const interTight = Inter_Tight({ variable: "--font-inter-tight", subsets: ["latin"], display: "optional" });
-// Logo wordmark only: geometric grotesque, not preloaded (tiny usage).
-const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], weight: "700", display: "optional", preload: false });
-// Mono is decorative (badges, dates): not preloaded, off the LCP critical path.
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"], display: "optional", preload: false });
+// Logo wordmark: one weight, preloaded so the header never falls back to Arial
+// (with display:"optional" an un-preloaded font usually misses the first paint).
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], weight: "700", display: "optional" });
 
 export const metadata: Metadata = {
   title: { default: site.fullTitle, template: `%s · ${site.shortName}` },
@@ -32,7 +31,7 @@ export const viewport = { themeColor: "#ffffff" };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${interTight.variable} ${spaceGrotesk.variable} ${geistMono.variable} h-full`}>
+    <html lang="en" className={`${interTight.variable} ${spaceGrotesk.variable} h-full`}>
       <body className="flex min-h-full flex-col">
         <a
           href="#main"

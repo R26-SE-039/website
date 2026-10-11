@@ -153,7 +153,7 @@ const memberCards: Person[] = team.map((m) => ({
 
 // Fixed card widths keep the square photos compact (~240 px); rows are centred.
 const cardGrid = "mt-4 flex flex-wrap justify-center gap-4";
-const groupHeading = "font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]";
+const groupHeading = "text-xs font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]";
 
 export default function AboutSection() {
   return (
