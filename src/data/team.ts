@@ -37,6 +37,17 @@ export const team: Member[] = [
 ];
 
 export const supervisors: Supervisor[] = [
-  { role: "Supervisor", name: "Ms. Suriyaa Kumari", email: "suriyaa.k@sliit.lk" },
-  { role: "Co-Supervisor", name: "Mr. Eishan Weerasinghe", email: "eishan.w@sliit.lk" },
+  {
+    role: "Supervisor",
+    name: "Ms. Suriyaa Kumari",
+    email: "suriyaa.k@sliit.lk",
+    department: "Department of Information Technology",
+    photo: "/images/team/supervisor-suriyaa.webp",
+  },
+  {
+    role: "Co-Supervisor",
+    name: "Mr. Eishan Weerasinghe",
+    email: "eishan.w@sliit.lk",
+    photo: "/images/team/supervisor-eishan.webp",
+  },
 ];

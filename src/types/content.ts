@@ -27,6 +27,7 @@ export interface Supervisor {
   role: "Supervisor" | "Co-Supervisor";
   name: string;
   email: string;
+  department?: string; // e.g. "Department of Information Technology"; omitted → site.department
   photo?: string; // path under public/; omitted → initials avatar
   linkedin?: string;
   scholar?: string; // Google Scholar profile URL
