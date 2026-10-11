@@ -219,7 +219,7 @@ export default function DocumentsSection() {
           <h3 className={subheading}>Documents</h3>
           <p className="mt-2 text-center text-on-navy-muted">All documents related to this project.</p>
           <PaperBanner doc={researchPaper} />
-          <ul className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {docColumns.map((c) => (
               <DocColumn key={c.id} title={c.title} items={c.items} icon={FileText} />
             ))}
