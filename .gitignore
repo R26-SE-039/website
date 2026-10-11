@@ -41,4 +41,6 @@ yarn-error.log*
 next-env.d.ts
 .lighthouse/
 out/
-public/video/
+# Hero video: only the compressed dashboard.mp4 (~250 KB) is committed, so Vercel serves it.
+public/video/*
+!public/video/dashboard.mp4
