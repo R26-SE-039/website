@@ -4,7 +4,7 @@ export const site = {
   subtitle: "An AI-Powered Closed-Loop QA Automation Platform",
   groupId: "R26-SE-039",
   heroBadge: "Stories · Gherkin · Test code · Self-healing · Traceability",
-  heroTitle: "From sprint conversation to self-healing test, in one closed loop.",
+  heroTitle: "NextGen QA - Voice driven test case generation and self-healing",
   heroDescription:
     "NextGen QA turns meeting speech into user stories, generates and independently validates executable UI tests, heals the ones that break, and traces every requirement to its result.",
   // Dashboard recording shown in the hero frame: public/video/dashboard.mp4 (1280x624, H.264, no audio,
