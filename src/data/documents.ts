@@ -114,6 +114,18 @@ export const documents: DocumentItem[] = [
   },
 ];
 
+/** Featured above the document columns: the group's research paper (public/docs/research-paper/). */
+export const researchPaper: DocumentItem = {
+  id: "research-paper",
+  title: "AI-Driven Framework for End-to-End Software Testing Lifecycle Automation",
+  subtitle: "Research paper · R26-SE-039",
+  category: "final",
+  owner: "Group",
+  format: "PDF",
+  status: "available",
+  href: "/docs/research-paper/Research_Paper.pdf",
+};
+
 export const documentCategories: { id: DocumentItem["category"]; title: string }[] = [
   { id: "charter", title: "Project Charter (TAF)" },
   { id: "proposal", title: "Project Proposal Reports" },

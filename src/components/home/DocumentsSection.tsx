@@ -2,7 +2,7 @@ import { Download, FileText, Presentation as PresentationIcon, type LucideIcon }
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
 import { asset } from "@/lib/asset";
-import { documentCategories, documents } from "@/data/documents";
+import { documentCategories, documents, researchPaper } from "@/data/documents";
 import { presentations } from "@/data/presentations";
 import type { DocumentItem } from "@/types/content";
 
@@ -153,6 +153,33 @@ function DocRow({ doc }: { doc: DocumentItem }) {
   );
 }
 
+/** Highlighted research paper banner above the columns. */
+function PaperBanner({ doc }: { doc: DocumentItem }) {
+  const href = doc.href ?? "";
+  return (
+    <div className="mt-6 flex flex-col gap-5 rounded-2xl border border-brand/40 bg-navy-2 p-6 shadow-[0_24px_60px_-35px_rgba(0,194,255,0.35)] md:flex-row md:items-center md:justify-between md:gap-8 md:px-8">
+      <div className="flex items-start gap-4">
+        <span aria-hidden="true" className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand text-navy">
+          <FileText size={20} />
+        </span>
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Research paper</p>
+          <h4 className="mt-1.5 text-lg font-bold leading-snug text-white md:text-xl">{doc.title}</h4>
+          <p className="mt-1 text-sm text-on-navy-muted">{doc.subtitle}</p>
+        </div>
+      </div>
+      <a
+        href={encodeURI(asset(href))}
+        download="R26-SE-039-Research-Paper.pdf"
+        className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-brand px-7 text-[15px] font-semibold text-brand-ink motion-safe:transition-all hover:-translate-y-px hover:brightness-95"
+      >
+        <Download size={16} aria-hidden="true" />
+        Download paper
+      </a>
+    </div>
+  );
+}
+
 function DocColumn({ title, items, icon: Icon }: { title: string; items: DocumentItem[]; icon: LucideIcon }) {
   return (
     <li className={`${cardClass} flex flex-col`}>
@@ -191,7 +218,8 @@ export default function DocumentsSection() {
         <div className="mx-auto mt-12 max-w-6xl">
           <h3 className={subheading}>Documents</h3>
           <p className="mt-2 text-center text-on-navy-muted">All documents related to this project.</p>
-          <ul className="mt-6 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <PaperBanner doc={researchPaper} />
+          <ul className="mt-4 grid items-start gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {docColumns.map((c) => (
               <DocColumn key={c.id} title={c.title} items={c.items} icon={FileText} />
             ))}
