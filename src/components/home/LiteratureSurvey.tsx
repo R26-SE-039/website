@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
+import { asset } from "@/lib/asset";
 import { cn } from "@/lib/cn";
 import { literature, literatureInsight } from "@/data/domain";
 
@@ -47,6 +48,7 @@ export default function LiteratureSurvey() {
     <section id="literature-survey" data-nav-section className="bg-white py-24 md:py-32">
       <Container>
         <SectionIntro
+          align="center"
           eyebrow="Domain · Literature survey"
           title="What the research already knows, and where it stops."
           description="Five threads of recent work meet in this project. Each one solves a slice; the survey shows why the slices never joined up."
@@ -54,7 +56,7 @@ export default function LiteratureSurvey() {
 
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
           {/* Hub */}
-          <div className="relative overflow-hidden rounded-[24px] bg-navy p-7 text-white sm:col-span-2 md:p-9 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:flex-col">
+          <div className="relative overflow-hidden rounded-[24px] bg-navy p-7 text-white shadow-[0_30px_80px_-30px_rgba(0,114,221,0.55)] ring-1 ring-brand/40 sm:col-span-2 md:p-9 lg:col-span-1 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:flex lg:flex-col">
             <span
               aria-hidden="true"
               className="pointer-events-none absolute -right-24 -bottom-24 size-72 rounded-full border border-white/10"
@@ -63,15 +65,18 @@ export default function LiteratureSurvey() {
               aria-hidden="true"
               className="pointer-events-none absolute -right-10 -bottom-10 size-44 rounded-full border border-brand/25"
             />
-            <span aria-hidden="true" className="grid size-12 place-items-center rounded-2xl bg-brand/15 text-brand">
-              <BookOpen size={22} />
+            <span aria-hidden="true" className="grid h-14 w-[4.5rem] place-items-center rounded-2xl bg-white shadow-[0_0_0_6px_rgba(0,194,255,0.15)]">
+              {/* eslint-disable-next-line @next/next/no-img-element -- static logo mark */}
+              <img src={asset("/logos/qa-mark.webp")} alt="" width={47} height={32} className="h-8 w-auto" />
             </span>
             <p className="mt-6 text-xs font-semibold uppercase tracking-[0.14em] text-brand">The gap</p>
             <p className="mt-3 text-2xl font-bold leading-snug md:text-[1.75rem]">{literatureInsight.headline}</p>
-            <p className="mt-4 text-base leading-relaxed text-on-navy-muted">{literatureInsight.text}</p>
+            <p className="mt-4 text-[15px] leading-relaxed text-on-navy-muted">{literatureInsight.text}</p>
 
             <div className="relative mt-8 lg:mt-auto lg:pt-8">
-              <p className="text-sm font-semibold text-white">NextGen QA joins them into one workflow</p>
+              <p className="text-sm font-semibold text-white">
+                <span className="text-brand">NextGen QA</span> joins them into one workflow
+              </p>
               <ol className="mt-4 flex flex-wrap items-center gap-x-1.5 gap-y-2" aria-label="Integrated workflow">
                 {literatureInsight.loop.map((step, i) => (
                   <li key={step} className="flex items-center gap-1.5">
@@ -130,10 +135,10 @@ export default function LiteratureSurvey() {
                   </div>
 
                   <h3 className="mt-5 text-lg font-bold leading-snug text-ink">{theme.title}</h3>
-                  <p className="mt-3 text-[15px] leading-relaxed text-muted">{theme.summary}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-muted">{theme.summary}</p>
                 </div>
 
-                <div className={cn("mt-5 flex flex-1 flex-col", wide && "lg:col-span-7 lg:mt-0")}>
+                <div className={cn("mt-4 flex flex-1 flex-col", wide && "lg:col-span-7 lg:mt-0")}>
                   <div className={cn("rounded-r-2xl border-l-2 border-brand bg-surface px-4 py-3.5", !wide && "flex-1")}>
                     <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-ink">
                       Where it stops
@@ -142,7 +147,7 @@ export default function LiteratureSurvey() {
                   </div>
 
                   {theme.references.length > 0 && (
-                    <ul className="mt-5 flex flex-wrap gap-1.5" aria-label="Key references">
+                    <ul className="mt-4 flex flex-wrap gap-1.5" aria-label="Key references">
                       {theme.references.map((r) => (
                         <li
                           key={r}

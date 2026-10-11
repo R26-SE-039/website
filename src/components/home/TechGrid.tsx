@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
+import { BrandUse } from "@/components/ui/BrandSprite";
 import SectionIntro from "@/components/ui/SectionIntro";
 import { brandIcons, type BrandSlug } from "@/data/brandIcons";
 import { technologies } from "@/data/domain";
@@ -38,13 +39,7 @@ const fallbackHex: Record<string, string> = {
 
 function Logo({ icon, name }: { icon?: string; name: string }) {
   const brand = icon ? brandIcons[icon as BrandSlug] : undefined;
-  if (brand) {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="size-6 fill-current">
-        <path d={brand.path} />
-      </svg>
-    );
-  }
+  if (brand) return <BrandUse slug={icon as BrandSlug} className="size-6 fill-current" />;
   const Fallback = fallbackIcons[name] ?? Gauge;
   return <Fallback size={22} aria-hidden="true" />;
 }

@@ -11,14 +11,18 @@ import Objectives from "@/components/home/Objectives";
 import ResearchGap from "@/components/home/ResearchGap";
 import ResearchProblem from "@/components/home/ResearchProblem";
 import TechGrid from "@/components/home/TechGrid";
+import TechMarquee from "@/components/home/TechMarquee";
+import BrandSprite from "@/components/ui/BrandSprite";
 
 /** One-page site: every required section lives here and the navbar jumps to its anchor. */
 export default function HomePage() {
   return (
     <>
+      <BrandSprite />
       <div id="top" data-nav-section>
         <Hero />
         <Highlights />
+        <TechMarquee />
         <ComponentCards />
       </div>
       <LiteratureSurvey />

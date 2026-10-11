@@ -133,13 +133,21 @@ export default function ResearchProblem() {
         <div className="mt-20">
           <h3 className="text-xl font-bold text-ink">Research questions and results</h3>
           <ol className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {researchProblem.perComponent.map((q, i) => (
+            {researchProblem.perComponent.map((q) => (
               <li
                 key={q.no}
-                className="flex flex-col rounded-3xl border border-line bg-white p-6"
+                className="group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-white p-6 hover:border-brand/70 hover:shadow-[0_22px_48px_-28px_rgba(14,24,42,0.4)] motion-safe:transition-[translate,box-shadow,border-color] motion-safe:duration-300 motion-safe:hover:-translate-y-1.5"
               >
+                {/* Cyan bar sweeps across the top edge on hover. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-brand group-hover:scale-x-100 motion-safe:transition-transform motion-safe:duration-500"
+                />
                 <p className="text-xs text-muted">
-                  <span className="font-semibold text-ink">RQ{q.no}</span> · Component {q.no}
+                  <span className="rounded-full bg-brand/15 px-2 py-0.5 font-semibold text-ink group-hover:bg-navy group-hover:text-white motion-safe:transition-colors motion-safe:duration-300">
+                    RQ{q.no}
+                  </span>{" "}
+                  · Component {q.no}
                 </p>
                 <p className="mt-3 text-[15px] font-medium leading-relaxed text-ink">{q.question}</p>
                 <div className="mt-auto pt-6">

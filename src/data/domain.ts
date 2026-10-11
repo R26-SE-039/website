@@ -1,49 +1,45 @@
 import type { ComponentNo, GapRow, LiteratureTheme, TechCategory } from "@/types/content";
 
-// The five literature-review threads of the research paper (docs/Research_Paper_New (2).pdf, §II-A).
+// The five literature-review threads of the research paper (docs/Research_Paper_New (2).pdf, §II-A),
+// condensed to one line each for the site; the paper has the full discussion.
 export const literature: LiteratureTheme[] = [
   {
     id: "requirements",
     title: "Requirements engineering and traceability",
-    summary:
-      "Traceability links requirements to downstream artefacts, Agile teams express functional requirements as user stories, and INVEST gives the criteria for a good story.",
-    gap: "These methods assume requirements are already written down. In real teams they are negotiated in meetings, incomplete and changing, so they must be captured from conversation, conflict-checked and validated.",
+    summary: "Traceability, user stories and INVEST define what a good, linked requirement looks like.",
+    gap: "They assume requirements are already written. Real ones are spoken in meetings, incomplete and changing.",
     components: [1],
     references: ["Gotel & Finkelstein (1994)", "Cohn (2004)", "Wake (2003)"],
   },
   {
     id: "llm-testgen",
     title: "LLMs for software testing",
-    summary:
-      "LLMs generate unit tests from code and natural language, CodaMosa uses them to escape coverage plateaus, and retrieval-augmented generation grounds output in application-specific context.",
-    gap: "Generated tests still carry incorrect selectors, incomplete assertions or scenarios that misrepresent the requirement, so they need grounding in the real application and verification by execution.",
+    summary: "LLMs write tests from code and text; CodaMosa and retrieval-augmented generation push coverage and context.",
+    gap: "Tests still carry wrong selectors and weak assertions until grounded in the real app and executed.",
     components: [2],
     references: ["Schäfer et al. (2024)", "Lemieux et al. (2023)", "Lewis et al. (2020)"],
   },
   {
     id: "agents",
     title: "Agentic exploration and visual grounding",
-    summary:
-      "ReAct combines reasoning with action, WebArena benchmarks autonomous web agents, Set-of-Mark improves visual grounding over numbered UI elements, and Reflexion adds memory of past mistakes.",
-    gap: "These agents aim to finish a task, not to cover an application. Testing needs explicit state tracking, failure memory and a coverage-based rule for when to stop.",
+    summary: "ReAct, WebArena, Set-of-Mark and Reflexion let agents reason, act and see the UI.",
+    gap: "Built to finish a task, not to cover an app: no state tracking, failure memory or stopping rule.",
     components: [2],
     references: ["Yao et al. (2023)", "Zhou et al. (2024)", "Yang et al. (2023)", "Shinn et al. (2023)"],
   },
   {
     id: "repair",
     title: "CI/CD failure analysis and program repair",
-    summary:
-      "CI failures come from tests, dependencies, configuration, infrastructure and application defects, and LLM repair agents show that repository-level repair is increasingly feasible, while SWE-bench shows how hard it remains.",
-    gap: "Giving an agent write access raises security and reliability risks. Safe self-healing needs explicit authorisation, restricted permissions and a policy that separates diagnosis from permission to change code.",
+    summary: "LLM agents can now repair code at repository level, though SWE-bench shows how hard it remains.",
+    gap: "Write access without authorisation, restricted permissions or a safety policy is a risk.",
     components: [3],
     references: ["Rausch et al. (2017)", "Bouzenia et al. (2024)", "Jimenez et al. (2024)"],
   },
   {
     id: "quality",
     title: "Test quality, prioritisation and coverage",
-    summary:
-      "Mutation testing estimates fault-detection power, risk-based testing ranks work by impact and likelihood, and APFD measures how quickly a test order finds faults.",
-    gap: "Quality scores, coverage and traceability are usually separate artefacts. An integrated lifecycle has to keep them linked to requirements, tests, execution results and approvals.",
+    summary: "Mutation testing, risk-based ranking and APFD measure how good a test suite is.",
+    gap: "Scores, coverage and traceability live apart from requirements and execution results.",
     components: [4],
     references: ["Jia & Harman (2011)", "Amland (2000)", "Rothermel et al. (2001)"],
   },
@@ -201,7 +197,7 @@ export const technologies: TechCategory[] = [
 
 export const literatureInsight = {
   headline: "Every ingredient exists, nobody closes the loop.",
-  text: "Existing work starts from documented rather than spoken requirements, generates tests that never see the application, explores for task completion instead of coverage, gives repair agents autonomy without safety governance, and keeps traceability, quality and coverage apart from execution evidence.",
+  text: "Each thread solves one slice. None starts from spoken requirements, grounds tests in the live UI, governs repair and links results back to the requirement.",
   // The paper's answer: one continuous workflow (§II-B).
   loop: ["Elicitation", "Story validation", "Test generation", "Exploration", "Execution", "Failure analysis", "Self-healing", "Traceability"],
 };
