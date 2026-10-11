@@ -6,7 +6,8 @@ import { site } from "@/data/site";
 import { supervisors, team } from "@/data/team";
 import { asset } from "@/lib/asset";
 
-const department = site.department.replace(/^Department of /, "");
+const shortDept = (d: string) => d.replace(/^Department of /, "");
+const department = shortDept(site.department);
 
 /** "Ms. Suriyaa Kumari" → "SK", "Abeygunasekara D.T." → "AD" */
 const initials = (name: string) =>
@@ -125,7 +126,7 @@ function PersonCard({ p }: { p: Person }) {
 const supervisorCards: Person[] = supervisors.map((s) => ({
   name: s.name,
   badge: s.role,
-  facts: [{ value: site.institution }, { label: "Department", value: department }],
+  facts: [{ value: site.institution }, { label: "Department", value: s.department ? shortDept(s.department) : department }],
   email: s.email,
   photo: s.photo,
   links: [
