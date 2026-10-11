@@ -80,7 +80,8 @@ export const documents: DocumentItem[] = [
     category: "logbook",
     owner: "Ranasinghe S.I.",
     format: "PDF",
-    status: "pending",
+    status: "available",
+    href: "/docs/log-book/IT22371768 LogBook.pdf",
   },
   {
     id: "logbook-c4",
@@ -89,7 +90,8 @@ export const documents: DocumentItem[] = [
     category: "logbook",
     owner: "Rashani K.G.M.",
     format: "PDF",
-    status: "pending",
+    status: "available",
+    href: "/docs/log-book/IT22182678_LogBook.pdf",
   },
   {
     id: "checklist-1",
