@@ -1,14 +1,16 @@
 import type { DocumentItem } from "@/types/content";
 
-// Links only. Replace `pending` with `available` and set `href` when a document is published.
+// Set `status: "available"` and `href` when a document is published. `href` is either a file in
+// public/docs/ (compressed PDF, e.g. "/docs/checklist.pdf") or an external link (Google Drive share URL).
 export const documents: DocumentItem[] = [
   {
     id: "charter",
-    title: "Project Charter",
+    title: "Project Charter (TAF)", // Topic Assessment Form, R26-SE-039
     category: "charter",
     owner: "Group",
     format: "PDF",
-    status: "pending",
+    status: "available",
+    href: "/docs/topic-assessment-form.pdf",
     description: "Scope, roles and the initial plan agreed with the supervisors.",
   },
   {
@@ -21,11 +23,12 @@ export const documents: DocumentItem[] = [
   },
   {
     id: "checklist-1",
-    title: "Checklist Document", // TODO: exact checklist name
+    title: "Checklist Document",
     category: "checklist",
     owner: "Group",
     format: "PDF",
-    status: "pending",
+    status: "available",
+    href: "/docs/checklist.pdf",
   },
   {
     id: "final-group",

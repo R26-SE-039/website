@@ -1,6 +1,7 @@
 import { Download, FileText, Presentation as PresentationIcon, type LucideIcon } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
+import { asset } from "@/lib/asset";
 import { documents } from "@/data/documents";
 import { presentations } from "@/data/presentations";
 import type { DocumentItem } from "@/types/content";
@@ -47,10 +48,12 @@ const slideCards: Card[] = presentations.map((p) => ({
 
 function DownloadLink({ row, title }: { row: Row; title: string }) {
   if (row.href) {
+    // Files in public/docs/ get the base path and a tidy saved name; external links open as they are.
+    const local = row.href.startsWith("/");
     return (
       <a
-        href={row.href}
-        download
+        href={local ? asset(row.href) : row.href}
+        download={local ? `R26-SE-039-${row.href.split("/").pop()}` : undefined}
         target="_blank"
         rel="noopener noreferrer"
         className="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold text-brand underline-offset-4 hover:underline"

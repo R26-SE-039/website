@@ -36,8 +36,10 @@ Read this file and `docs/website-guidelines.md` (the official SLIIT requirements
    server actions, middleware, ISR, `next/headers`, cookies or any feature needing a Node server.
 2. **Hosting:** the course web allows WordPress/HTML/CSS and has a **20 MB maximum**. The build
    output (`out/`) must be plain static files. Target **< 5 MB total**.
-3. **No large binaries in the repo.** PDFs, DOCX and slide decks are linked externally
-   (Google Drive / OneDrive). Never commit them to `public/`.
+3. **Documents:** the team chose to host the PDFs in `public/docs/` (decided 2026-10-11) so they
+   download straight from the site. Compress before adding (slide images ≤ 1600 px, JPEG q70 via
+   pypdf; 31 MB → 8 MB) and keep the originals outside the site in `../website-originals/docs/`.
+   Anything that would push `out/` towards 20 MB goes to Google Drive instead (external `href`).
 4. **Images:** SVG for logos and diagrams, WebP for photos. `images: { unoptimized: true }`.
    Team photos ≤ 400×400 px and ≤ 60 KB each. **No video files in the repo, no raster hero background.**
    A demo video is allowed only as an externally hosted embed loaded on click (see §15).
