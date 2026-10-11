@@ -215,11 +215,11 @@ export default function DocumentsSection() {
           description="Every document and slide deck of the project, downloadable as soon as it is published."
         />
 
-        <div className="mx-auto mt-12 max-w-6xl">
+        <div className="mx-auto mt-12 max-w-7xl">
           <h3 className={subheading}>Documents</h3>
           <p className="mt-2 text-center text-on-navy-muted">All documents related to this project.</p>
           <PaperBanner doc={researchPaper} />
-          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
             {docColumns.map((c) => (
               <DocColumn key={c.id} title={c.title} items={c.items} icon={FileText} />
             ))}
