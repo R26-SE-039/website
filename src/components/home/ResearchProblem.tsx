@@ -47,7 +47,7 @@ export default function ResearchProblem() {
               </p>
             ))}
             <figure className="mt-8 rounded-r-3xl border-l-4 border-brand bg-surface px-6 py-5">
-              <figcaption className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]">
+              <figcaption className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]">
                 Research problem
               </figcaption>
               <blockquote className="mt-2 text-lg font-semibold leading-snug text-ink">{researchProblem.main}</blockquote>
@@ -69,7 +69,7 @@ export default function ResearchProblem() {
                     >
                       <Icon size={20} />
                     </span>
-                    <span className="rounded-full bg-navy px-2.5 py-0.5 font-mono text-[11px] font-semibold text-white">
+                    <span className="rounded-full bg-navy px-2.5 py-0.5 text-[11px] font-semibold text-white">
                       C{pt.no}
                     </span>
                   </div>
@@ -93,7 +93,7 @@ export default function ResearchProblem() {
           />
           <div className="relative grid gap-8 lg:grid-cols-12 lg:gap-14">
             <div className="lg:col-span-7">
-              <p className="font-mono text-xs font-semibold uppercase tracking-[0.14em] text-brand">Proposed solution</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Proposed solution</p>
               <p className="mt-4 text-xl font-semibold leading-snug md:text-2xl">{solutionNarrative[0]}</p>
             </div>
             <div className="lg:col-span-5 lg:pt-9">
@@ -119,7 +119,7 @@ export default function ResearchProblem() {
                     >
                       <Icon size={18} />
                     </span>
-                    <span className="font-mono text-xs text-on-navy-muted">C{d.no}</span>
+                    <span className="text-xs text-on-navy-muted">C{d.no}</span>
                   </div>
                   <p className="mt-4 font-bold leading-snug text-white">{d.title}</p>
                   <p className="mt-1.5 text-sm leading-relaxed text-on-navy-muted">{d.text}</p>
@@ -133,18 +133,26 @@ export default function ResearchProblem() {
         <div className="mt-20">
           <h3 className="text-xl font-bold text-ink">Research questions and results</h3>
           <ol className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {researchProblem.perComponent.map((q, i) => (
+            {researchProblem.perComponent.map((q) => (
               <li
                 key={q.no}
-                className="flex flex-col rounded-3xl border border-line bg-white p-6"
+                className="group relative flex flex-col overflow-hidden rounded-3xl border border-line bg-white p-6 hover:border-brand/70 hover:shadow-[0_22px_48px_-28px_rgba(14,24,42,0.4)] motion-safe:transition-[translate,box-shadow,border-color] motion-safe:duration-300 motion-safe:hover:-translate-y-1.5"
               >
-                <p className="font-mono text-xs text-muted">
-                  <span className="font-semibold text-ink">RQ{q.no}</span> · Component {q.no}
+                {/* Cyan bar sweeps across the top edge on hover. */}
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-brand group-hover:scale-x-100 motion-safe:transition-transform motion-safe:duration-500"
+                />
+                <p className="text-xs text-muted">
+                  <span className="rounded-full bg-brand/15 px-2 py-0.5 font-semibold text-ink group-hover:bg-navy group-hover:text-white motion-safe:transition-colors motion-safe:duration-300">
+                    RQ{q.no}
+                  </span>{" "}
+                  · Component {q.no}
                 </p>
                 <p className="mt-3 text-[15px] font-medium leading-relaxed text-ink">{q.question}</p>
                 <div className="mt-auto pt-6">
                   <div className="border-t border-line pt-4">
-                    <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]">
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]">
                       Result
                     </p>
                     <ul className="mt-2 space-y-1.5">

@@ -8,7 +8,7 @@ export default function ComponentCards() {
       <Container>
         <div className="grid gap-8 md:grid-cols-12 md:items-end">
           <div className="md:col-span-7">
-            <p className="font-mono text-xs font-semibold uppercase tracking-[0.12em] text-brand">Four components</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-brand">Four components</p>
             <h2 className="mt-5 max-w-[620px] text-4xl font-bold leading-[1.05] text-white md:text-[3.25rem]">
               Protect every stage of the QA lifecycle.
             </h2>

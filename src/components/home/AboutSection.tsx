@@ -22,6 +22,7 @@ type Link = { label: string; href: string; icon?: BrandSlug };
 type Person = {
   name: string;
   badge: string;
+  highlight?: boolean; // brand-coloured badge (group leader)
   facts: { label?: string; value: string }[];
   email: string;
   photo?: string;
@@ -39,7 +40,7 @@ function BrandMark({ slug }: { slug: BrandSlug }) {
 
 function PersonCard({ p }: { p: Person }) {
   return (
-    <li className="group flex flex-col overflow-hidden rounded-3xl border border-line bg-white">
+    <li className="group flex w-full max-w-sm flex-col overflow-hidden rounded-3xl border border-line bg-white sm:w-[280px] lg:w-[240px]">
       <div className="relative aspect-square overflow-hidden bg-navy">
         {p.photo ? (
           // eslint-disable-next-line @next/next/no-img-element -- static team photo
@@ -62,14 +63,20 @@ function PersonCard({ p }: { p: Person }) {
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-6">
-        <h3 className="text-lg font-bold leading-snug text-ink">{p.name}</h3>
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className="text-base font-bold leading-snug text-ink">{p.name}</h3>
         <p className="mt-2">
-          <span className="inline-flex rounded-md bg-navy px-2 py-0.5 text-[11px] font-semibold text-white">
+          <span
+            className={
+              p.highlight
+                ? "inline-flex rounded-md bg-brand px-2 py-0.5 text-[11px] font-semibold text-brand-ink"
+                : "inline-flex rounded-md bg-navy px-2 py-0.5 text-[11px] font-semibold text-white"
+            }
+          >
             {p.badge}
           </span>
         </p>
-        <dl className="mt-4 space-y-3 text-sm">
+        <dl className="mt-3 space-y-2 text-[13px]">
           {p.facts.map((f) => (
             <div key={f.value}>
               {f.label && <dt className="font-semibold text-ink">{f.label}</dt>}
@@ -86,7 +93,7 @@ function PersonCard({ p }: { p: Person }) {
         )}
       </div>
 
-      <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line px-6 py-4 text-sm font-medium">
+      <ul className="flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line px-5 py-3 text-[13px] font-medium">
         {p.links.map((l) => (
           <li key={l.href}>
             <a
@@ -129,7 +136,8 @@ const supervisorCards: Person[] = supervisors.map((s) => ({
 
 const memberCards: Person[] = team.map((m) => ({
   name: m.name,
-  badge: "Group Member",
+  badge: m.leader ? "Group Leader" : "Group Member",
+  highlight: m.leader,
   facts: [
     { label: "Undergraduate", value: `${site.institution} · ${m.studentId}` },
     { label: "Department", value: department },
@@ -143,27 +151,30 @@ const memberCards: Person[] = team.map((m) => ({
   achievements: m.achievements,
 }));
 
-const groupHeading = "font-mono text-xs font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]";
+// Fixed card widths keep the square photos compact (~240 px); rows are centred.
+const cardGrid = "mt-4 flex flex-wrap justify-center gap-4";
+const groupHeading = "text-xs font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]";
 
 export default function AboutSection() {
   return (
-    <section id="about" data-nav-section className="bg-surface py-24 md:py-32">
+    <section id="about" data-nav-section className="bg-surface py-20 md:py-24">
       <Container>
         <SectionIntro
+          align="center"
           eyebrow="About us"
           title="Meet the team."
           description={`${site.groupId} · ${site.degree} · ${site.faculty}, ${site.institution}`}
         />
 
-        <h3 className={`mt-14 ${groupHeading}`}>Supervisors</h3>
-        <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <h3 className={`mt-10 text-center ${groupHeading}`}>Supervisors</h3>
+        <ul className={cardGrid}>
           {supervisorCards.map((p) => (
             <PersonCard key={p.name} p={p} />
           ))}
         </ul>
 
-        <h3 className={`mt-14 ${groupHeading}`}>Research team</h3>
-        <ul className="mt-5 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <h3 className={`mt-10 text-center ${groupHeading}`}>Research team</h3>
+        <ul className={cardGrid}>
           {memberCards.map((p) => (
             <PersonCard key={p.name} p={p} />
           ))}

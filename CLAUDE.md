@@ -36,8 +36,10 @@ Read this file and `docs/website-guidelines.md` (the official SLIIT requirements
    server actions, middleware, ISR, `next/headers`, cookies or any feature needing a Node server.
 2. **Hosting:** the course web allows WordPress/HTML/CSS and has a **20 MB maximum**. The build
    output (`out/`) must be plain static files. Target **< 5 MB total**.
-3. **No large binaries in the repo.** PDFs, DOCX and slide decks are linked externally
-   (Google Drive / OneDrive). Never commit them to `public/`.
+3. **Documents:** the team chose to host the PDFs in `public/docs/` (decided 2026-10-11) so they
+   download straight from the site. Compress before adding (slide images ≤ 1600 px, JPEG q70 via
+   pypdf; 31 MB → 8 MB) and keep the originals outside the site in `../website-originals/docs/`.
+   Anything that would push `out/` towards 20 MB goes to Google Drive instead (external `href`).
 4. **Images:** SVG for logos and diagrams, WebP for photos. `images: { unoptimized: true }`.
    Team photos ≤ 400×400 px and ≤ 60 KB each. **No video files in the repo, no raster hero background.**
    A demo video is allowed only as an externally hosted embed loaded on click (see §15).
@@ -63,7 +65,7 @@ Read this file and `docs/website-guidelines.md` (the official SLIIT requirements
 |---|---|
 | Framework | Next.js 16 (App Router, Turbopack), TypeScript `strict` |
 | Styling | Tailwind CSS v4 (tokens via `@theme` in `globals.css`) |
-| Fonts | `next/font` — Geist Sans (body/headings) + Geist Mono (badges/code), self-hosted at build |
+| Fonts | `next/font` — Inter Tight (body, headings, labels) + Space Grotesk 700 (logo wordmark only), self-hosted at build. No mono font: with `display: optional` it fell back to Arial on first visits. |
 | Icons | `lucide-react` (named imports only) |
 | Class merging | `clsx` |
 | Hosting | Static files from `out/` uploaded to the course web; Vercel/GitHub Pages optional for previews |
@@ -208,14 +210,13 @@ ink and one cyan accent; selected sections flip to dark navy with the `.dark-sec
   --color-c1: #7c5cff;  --color-c2: #00c2ff;  --color-c3: #f0569a;  --color-c4: #14b8a6;
   --font-sans: var(--font-inter-tight);    /* headings + body, tracking -0.035em on h1 */
   --font-logo: var(--font-space-grotesk);  /* wordmark only */
-  --font-mono: var(--font-geist-mono);     /* badges, dates, ids */
 }
 ```
 
 Rules: one accent (`brand`) per screen; green/amber only carry status meaning;
 component colours appear only where a component is identified (loop diagram, stage rows, badges).
 Buttons: primary = cyan pill with navy text; secondary = navy outline; `navy` = filled navy (navbar CTA).
-Logo: `<Logo/>` text wordmark "NEXTGEN ▪ QA" in Space Grotesk; no image logo yet.
+Logo: `<Logo/>` = QA mark (`public/logos/qa-mark.webp`, trimmed from `qa-logo-freelogovectors.png`) + "NEXTGEN QA" wordmark in Space Grotesk. Favicons: `src/app/favicon.ico`, `icon.png`, `apple-icon.png` from the same mark.
 
 ### Hero (implemented)
 Badge pill → h1 (56–64 px, −0.035em) → abstract (18 px, max 640 px) → two pills → group line →
@@ -235,7 +236,7 @@ playsinline preload="metadata">`. Until then a CSS placeholder of the dashboard 
 ### Typography
 - `h1` 48–60 px (mobile 36 px), bold, tight tracking · `h2` 30–36 px · `h3` 20–24 px · body 16–18 px, line-height 1.7.
 - Max text width ~70 characters (`max-w-prose`). Short paragraphs.
-- Mono font for group ID, dates, marks and status badges.
+- Labels, dates, marks and status use the body font (uppercase + tracking for labels); status is a plain word.
 
 ### Layout and components
 - Container `max-w-6xl mx-auto px-5 md:px-8`; sections `py-20 md:py-28`.

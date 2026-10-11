@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Container from "@/components/ui/Container";
+import { BrandUse } from "@/components/ui/BrandSprite";
 import SectionIntro from "@/components/ui/SectionIntro";
 import { brandIcons, type BrandSlug } from "@/data/brandIcons";
 import { technologies } from "@/data/domain";
@@ -24,27 +25,26 @@ const categoryIcons: Record<string, LucideIcon> = {
   "Speech, retrieval & coverage": AudioLines,
 };
 
-// Tools without a brand mark get a line icon instead.
+// Tools without a brand mark get a line icon instead, in a colour that fits the tool.
 const fallbackIcons: Record<string, LucideIcon> = {
   RandomForest: Trees,
   "nyc / Istanbul": Gauge,
   "coverage.py": Gauge,
 };
+const fallbackHex: Record<string, string> = {
+  RandomForest: "#3F8F3F",
+  "nyc / Istanbul": "#CB3837", // npm red
+  "coverage.py": "#3776AB", // Python blue
+};
 
 function Logo({ icon, name }: { icon?: string; name: string }) {
   const brand = icon ? brandIcons[icon as BrandSlug] : undefined;
-  if (brand) {
-    return (
-      <svg viewBox="0 0 24 24" aria-hidden="true" className="size-6 fill-current">
-        <path d={brand.path} />
-      </svg>
-    );
-  }
+  if (brand) return <BrandUse slug={icon as BrandSlug} className="size-6 fill-current" />;
   const Fallback = fallbackIcons[name] ?? Gauge;
   return <Fallback size={22} aria-hidden="true" />;
 }
 
-/** Technologies by category: real brand marks in navy, switching to their brand colour on hover. */
+/** Technologies by category: real brand marks in their brand colour on a light tint of it. */
 export default function TechGrid() {
   return (
     <section id="technologies" data-nav-section className="bg-surface py-24 md:py-32">
@@ -67,19 +67,19 @@ export default function TechGrid() {
                     </span>
                     <h3 className="text-lg font-bold text-ink">{cat.category}</h3>
                   </div>
-                  <span className="font-mono text-xs text-muted">{cat.items.length} tools</span>
+                  <span className="text-xs text-muted">{cat.items.length} tools</span>
                 </div>
 
                 <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                   {cat.items.map((t) => {
-                    const hex = t.icon ? brandIcons[t.icon as BrandSlug]?.hex : undefined;
+                    const hex = (t.icon ? brandIcons[t.icon as BrandSlug]?.hex : undefined) ?? fallbackHex[t.name];
                     return (
                       <li
                         key={t.name}
                         style={{ "--brand-hex": hex ?? "var(--color-brand)" } as CSSProperties}
                         className="group flex items-center gap-3 rounded-2xl p-2.5 motion-safe:transition-colors hover:bg-surface"
                       >
-                        <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-line bg-white text-ink motion-safe:transition-[color,border-color,scale] motion-safe:duration-300 group-hover:border-(--brand-hex) group-hover:text-(--brand-hex) motion-safe:group-hover:scale-110">
+                        <span className="grid size-11 shrink-0 place-items-center rounded-xl border border-(--brand-hex)/25 bg-(--brand-hex)/8 text-(--brand-hex) motion-safe:transition-[border-color,scale] motion-safe:duration-300 group-hover:border-(--brand-hex) motion-safe:group-hover:scale-110">
                           <Logo icon={t.icon} name={t.name} />
                         </span>
                         <span className="min-w-0">

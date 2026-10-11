@@ -48,7 +48,7 @@ export default function MilestonesStepper({ milestones }: { milestones: Mileston
   const edge = 50 / milestones.length; // % from each side to the first/last step centre
 
   return (
-    <div className="mt-14">
+    <div className="mt-12">
       {/* Stepper */}
       <div className="-mx-5 -my-3 overflow-x-auto px-5 py-3 [scrollbar-width:none] md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
         <div
@@ -89,7 +89,7 @@ export default function MilestonesStepper({ milestones }: { milestones: Mileston
               >
                 <span
                   className={cn(
-                    "grid size-11 place-items-center rounded-2xl font-mono text-xs font-bold motion-safe:transition-[background-color,color,box-shadow,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110",
+                    "grid size-11 place-items-center rounded-2xl text-xs font-bold motion-safe:transition-[background-color,color,box-shadow,scale] motion-safe:duration-300 motion-safe:group-hover:scale-110",
                     done ? "bg-navy text-brand" : "border-2 border-line bg-white text-muted",
                     selected && "shadow-[0_0_0_6px_rgba(0,194,255,0.22)]",
                     selected && !done && "border-brand text-ink",
@@ -105,7 +105,7 @@ export default function MilestonesStepper({ milestones }: { milestones: Mileston
                 >
                   {ms.title}
                 </span>
-                <span className="mt-0.5 font-mono text-[11px] text-muted">{done ? "Completed" : "Upcoming"}</span>
+                <span className="mt-0.5 text-[11px] text-muted">{done ? "Completed" : "Upcoming"}</span>
               </button>
             );
           })}
@@ -117,10 +117,10 @@ export default function MilestonesStepper({ milestones }: { milestones: Mileston
         id="milestone-panel"
         role="tabpanel"
         aria-labelledby={m.id}
-        className="mt-8 grid gap-8 rounded-3xl border border-line bg-surface p-6 md:p-9 lg:grid-cols-12 lg:gap-12"
+        className="mt-8 grid gap-8 rounded-3xl border border-line bg-surface p-6 md:p-8 lg:grid-cols-12 lg:gap-10"
       >
         <div className="lg:col-span-8">
-          <p className="font-mono text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]">
+          <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#0a8fbd]">
             Milestone 0{active + 1} of 0{milestones.length}
           </p>
           <h3 className="mt-3 text-2xl font-bold leading-snug text-ink md:text-3xl">{m.title}</h3>
@@ -166,7 +166,7 @@ export default function MilestonesStepper({ milestones }: { milestones: Mileston
                 <Icon size={18} />
               </span>
               <div>
-                <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">{label}</dt>
+                <dt className="text-[11px] uppercase tracking-[0.12em] text-muted">{label}</dt>
                 <dd className="mt-0.5 font-semibold text-ink">{value}</dd>
               </div>
             </div>
@@ -176,8 +176,8 @@ export default function MilestonesStepper({ milestones }: { milestones: Mileston
               <Flag size={18} />
             </span>
             <div>
-              <dt className="font-mono text-[11px] uppercase tracking-[0.12em] text-muted">Status</dt>
-              <dd className="mt-1">
+              <dt className="text-[11px] uppercase tracking-[0.12em] text-muted">Status</dt>
+              <dd className="mt-0.5">
                 <StatusBadge status={m.status} />
               </dd>
             </div>

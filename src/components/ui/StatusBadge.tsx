@@ -10,21 +10,12 @@ const labels: Record<Status | DocStatus, string> = {
   pending: "Pending",
 };
 
-/** Pass `dark` on navy backgrounds: lighter text keeps the label readable there. */
+/**
+ * Status as a plain word in the body font: green when done, normal text colour
+ * otherwise. Pass `dark` on navy backgrounds.
+ */
 export default function StatusBadge({ status, className, dark = false }: Props) {
   const positive = status === "completed" || status === "available";
-  const text = positive ? (dark ? "text-[#4ade80]" : "text-[#15803d]") : dark ? "text-[#fbbf24]" : "text-[#b45309]";
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-xs",
-        positive ? "border-pass/40 bg-pass/10" : "border-warn/40 bg-warn/10",
-        text,
-        className,
-      )}
-    >
-      <span aria-hidden="true" className={cn("h-1.5 w-1.5 rounded-full", positive ? "bg-pass" : "bg-warn")} />
-      {labels[status]}
-    </span>
-  );
+  const colour = positive ? (dark ? "text-[#4ade80]" : "text-[#15803d]") : dark ? "text-white" : "text-ink";
+  return <span className={cn("font-semibold", colour, className)}>{labels[status]}</span>;
 }
