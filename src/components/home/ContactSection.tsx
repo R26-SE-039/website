@@ -1,11 +1,12 @@
-import { MapPin, Phone, Send } from "lucide-react";
+import { Mail, MapPin, MessageSquareText, Phone } from "lucide-react";
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
 import { site } from "@/data/site";
 import { team } from "@/data/team";
 import { mailtoHref } from "@/lib/contact";
+import ContactForm from "./ContactForm";
 
-/** One horizontal "write to us" panel: mailto pre-filled with the e-mail template, plus institution details. */
+/** Contact form in a navy panel, with the institution details and a direct e-mail link beside it. */
 export default function ContactSection() {
   const phones = team.filter((m) => m.phone);
 
@@ -18,7 +19,7 @@ export default function ContactSection() {
           description="Questions about the research, the platform or collaboration are welcome."
         />
 
-        <div className="relative mt-14 overflow-hidden rounded-3xl bg-navy p-7 text-white md:p-10">
+        <div className="relative mt-14 overflow-hidden rounded-3xl bg-navy p-6 text-white sm:p-8 md:p-10">
           <span
             aria-hidden="true"
             className="pointer-events-none absolute -right-24 -bottom-32 size-80 rounded-full border border-white/10"
@@ -28,43 +29,68 @@ export default function ContactSection() {
             className="pointer-events-none absolute -right-8 -bottom-16 size-52 rounded-full border border-brand/20"
           />
 
-          <div className="relative flex flex-col gap-8 md:flex-row md:items-center md:justify-between">
-            <div className="flex gap-5">
-              <span aria-hidden="true" className="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand/15 text-brand">
-                <Send size={22} />
-              </span>
-              <div>
-                <h3 className="text-2xl font-bold leading-snug">Write to the team</h3>
-                <p className="mt-2 max-w-xl text-base leading-relaxed text-on-navy-muted">
-                  Your email opens with our inquiry template already filled in: the subject, a greeting and a space for
-                  your message.
-                </p>
+          <div className="relative grid gap-10 lg:grid-cols-12 lg:gap-14">
+            {/* Form */}
+            <div className="lg:col-span-7">
+              <div className="flex items-center gap-3">
+                <span aria-hidden="true" className="grid size-10 shrink-0 place-items-center rounded-xl bg-brand/15 text-brand">
+                  <MessageSquareText size={19} />
+                </span>
+                <h3 className="text-2xl font-bold leading-snug">Send us a message</h3>
+              </div>
+              <p className="mt-3 text-base leading-relaxed text-on-navy-muted">
+                Fill in the form and we will get back to you within two working days.
+              </p>
+              <div className="mt-7">
+                <ContactForm />
               </div>
             </div>
-            <a
-              href={mailtoHref}
-              className="inline-flex min-h-12 w-fit shrink-0 items-center gap-2 rounded-full bg-brand px-7 text-[15px] font-semibold text-brand-ink hover:brightness-95 max-md:ml-17"
-            >
-              <Send size={16} aria-hidden="true" /> Write to us
-            </a>
-          </div>
 
-          <div className="relative mt-8 flex flex-col gap-4 border-t border-white/10 pt-6 text-sm md:flex-row md:items-start md:gap-12">
-            <p className="flex items-start gap-3">
-              <MapPin size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-              <span>
-                <span className="block font-semibold text-white">{site.institution}</span>
-                <span className="text-on-navy-muted">
-                  {site.faculty} · {site.department} · Malabe, Sri Lanka
-                </span>
-              </span>
-            </p>
-            {phones.length > 0 && (
-              <p className="flex items-start gap-3">
-                <Phone size={16} aria-hidden="true" className="mt-0.5 shrink-0 text-brand" />
-                <span className="text-on-navy-muted">{phones.map((m) => m.phone).join(" · ")}</span>
+            {/* Details */}
+            <aside className="flex flex-col gap-4 lg:col-span-5 lg:border-l lg:border-white/10 lg:pl-14">
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                  <Mail size={16} aria-hidden="true" className="text-brand" /> Prefer email?
+                </p>
+                <p className="mt-2 text-sm leading-relaxed text-on-navy-muted">
+                  Your mail client opens with our inquiry template already filled in: the subject, a greeting and a
+                  space for your message.
+                </p>
+                <a
+                  href={mailtoHref}
+                  className="mt-4 inline-flex min-h-11 items-center gap-2 rounded-full border-[1.5px] border-white/20 px-5 text-sm font-semibold text-white motion-safe:transition-colors hover:border-brand hover:text-brand"
+                >
+                  Write to us
+                </a>
+              </div>
+
+              <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                  <MapPin size={16} aria-hidden="true" className="text-brand" /> Where we are
+                </p>
+                <p className="mt-2 text-sm leading-relaxed">
+                  <span className="block font-semibold text-white">{site.institution}</span>
+                  <span className="text-on-navy-muted">
+                    {site.faculty} · {site.department}
+                    <br />
+                    Malabe, Sri Lanka
+                  </span>
+                </p>
+              </div>
+
+              {phones.length > 0 && (
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
+                  <p className="flex items-center gap-2 text-sm font-semibold text-white">
+                    <Phone size={16} aria-hidden="true" className="text-brand" /> Phone
+                  </p>
+                  <p className="mt-2 text-sm text-on-navy-muted">{phones.map((m) => m.phone).join(" · ")}</p>
+                </div>
+              )}
+
+              <p className="text-xs leading-relaxed text-on-navy-muted">
+                Project {site.groupId} · supervised by {site.supervisor} and {site.coSupervisor}.
               </p>
-            )}
+            </aside>
           </div>
         </div>
       </Container>

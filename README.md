@@ -95,6 +95,18 @@ https://nextgenqa.vercel.app/ automatically.
    NEXT_PUBLIC_BASE_PATH=/R26-SE-039 pnpm build
    ```
 
+**Contact form (EmailJS).** The site is static, so the form sends through
+[EmailJS](https://www.emailjs.com) from the browser (free plan: 200 emails/month). Until it is
+configured, the Send button falls back to the pre-filled `mailto:` link.
+
+1. Create an EmailJS account, add an **Email Service** (the team Gmail) and note its Service ID.
+2. Create an **Email Template** with these variables and note its Template ID:
+   `{{from_name}}`, `{{reply_to}}`, `{{organization}}`, `{{subject}}`, `{{message}}`.
+   Set the template's *Reply To* field to `{{reply_to}}` so replies go to the sender.
+3. Copy the **Public Key** from Account → API keys.
+4. Put the three values in `.env.local` (see `.env.example`) and in the Vercel project's
+   environment variables, then redeploy.
+
 ---
 
 ## Updating the content
