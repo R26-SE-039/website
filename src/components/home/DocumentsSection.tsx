@@ -2,7 +2,7 @@ import { Download, FileText, Presentation as PresentationIcon, type LucideIcon }
 import Container from "@/components/ui/Container";
 import SectionIntro from "@/components/ui/SectionIntro";
 import { asset } from "@/lib/asset";
-import { documents } from "@/data/documents";
+import { documentCategories, documents, researchPaper } from "@/data/documents";
 import { presentations } from "@/data/presentations";
 import type { DocumentItem } from "@/types/content";
 
@@ -11,29 +11,13 @@ type Card = { id: string; title: string; when: string; rows: Row[] };
 
 const placeholder = (v?: string) => !v || /^(TODO|TBA)\b/i.test(v.trim());
 
-const docHref = (d: DocumentItem) => (d.status === "available" ? d.href : undefined);
-const docWhen = (d: DocumentItem) =>
-  !placeholder(d.date) ? `Submitted on ${d.date}` : d.status === "available" ? "Published" : "Not submitted yet";
-
-// Group documents get one card each. The Final Report gets a full-width card whose
-// rows are the group report plus one individual thesis per member, side by side.
-const theses = documents.filter((d) => d.id.startsWith("final-c"));
-const docCards: Card[] = documents
-  .filter((d) => !d.id.startsWith("final-c") && d.id !== "final-group")
-  .map((d) => ({
-    id: d.id,
-    title: d.title,
-    when: docWhen(d),
-    rows: [{ label: d.owner === "Group" ? "Group" : d.owner, href: docHref(d) }],
-  }));
-
-const finalDoc = documents.find((d) => d.id === "final-group");
-const finalCard: Card | undefined = finalDoc && {
-  id: finalDoc.id,
-  title: "Final Report",
-  when: docWhen(finalDoc),
-  rows: [{ label: "Group", href: docHref(finalDoc) }, ...theses.map((t) => ({ label: t.owner, href: docHref(t) }))],
-};
+// One column per document category; each column lists its documents as rows
+// (the final column holds the group report plus one individual report per member).
+const docColumns = documentCategories.map((c) => ({
+  id: c.id,
+  title: c.title,
+  items: documents.filter((d) => d.category === c.id),
+}));
 
 const slideCards: Card[] = presentations.map((p) => ({
   id: p.id,
@@ -126,22 +110,89 @@ function CardGrid({ cards, icon, cols }: { cards: Card[]; icon: LucideIcon; cols
   );
 }
 
-/** Full-width card whose download rows sit side by side (group report + one thesis per member). */
-function WideCard({ card, icon }: { card: Card; icon: LucideIcon }) {
+const docHref = (d: DocumentItem) => (d.status === "available" ? d.href : undefined);
+
+// Saved name: the file's own name, prefixed with the group id unless it already carries one.
+const fileName = (href: string) => {
+  const n = href.split("/").pop() ?? "document.pdf";
+  return n.startsWith("R26-SE-") ? n : `R26-SE-039-${n}`;
+};
+
+/** One document row: title + small caption on the left, a Download button (or "Pending") on the right. */
+function DocRow({ doc }: { doc: DocumentItem }) {
+  const href = docHref(doc);
+  const caption = doc.subtitle ?? (doc.owner === "Group" ? "Group document" : doc.owner);
   return (
-    <div className={`mt-4 ${cardClass}`}>
-      <CardHead card={card} icon={icon} />
-      <ul className="grid gap-px border-t border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-5">
-        {card.rows.map((r) => (
-          <li
-            key={r.label}
-            className="flex items-center justify-between gap-3 bg-navy-2 px-5 py-2.5 sm:last:col-span-2 lg:last:col-span-1"
-          >
-            <RowItem row={r} title={card.title} />
-          </li>
+    <li className="flex items-center justify-between gap-3 px-5 py-3.5">
+      <div className="min-w-0">
+        <p className="text-[13.5px] font-semibold leading-snug text-white">{doc.title}</p>
+        <p className="mt-0.5 text-xs leading-snug text-on-navy-muted">{caption}</p>
+      </div>
+      {href ? (
+        <a
+          href={href.startsWith("/") ? encodeURI(asset(href)) : href}
+          download={href.startsWith("/") ? fileName(href) : undefined}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-brand/40 px-3 py-1 text-xs font-semibold text-brand motion-safe:transition-colors hover:bg-brand hover:text-navy"
+        >
+          <Download size={12} aria-hidden="true" />
+          Download
+          <span className="sr-only">{doc.title}</span>
+        </a>
+      ) : (
+        <span
+          title="Not published yet"
+          className="inline-flex shrink-0 items-center rounded-full border border-white/10 px-3 py-1 text-xs font-semibold text-white/35"
+        >
+          Pending
+          <span className="sr-only"> — {doc.title} is not published yet</span>
+        </span>
+      )}
+    </li>
+  );
+}
+
+/** Highlighted research paper banner above the columns. */
+function PaperBanner({ doc }: { doc: DocumentItem }) {
+  const href = doc.href ?? "";
+  return (
+    <div className="mt-6 flex flex-col gap-5 rounded-2xl border border-brand/40 bg-navy-2 p-6 shadow-[0_24px_60px_-35px_rgba(0,194,255,0.35)] md:flex-row md:items-center md:justify-between md:gap-8 md:px-8">
+      <div className="flex items-start gap-4">
+        <span aria-hidden="true" className="grid size-11 shrink-0 place-items-center rounded-xl bg-brand text-navy">
+          <FileText size={20} />
+        </span>
+        <div className="min-w-0">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-brand">Research paper</p>
+          <h4 className="mt-1.5 text-lg font-bold leading-snug text-white md:text-xl">{doc.title}</h4>
+          <p className="mt-1 text-sm text-on-navy-muted">{doc.subtitle}</p>
+        </div>
+      </div>
+      <a
+        href={encodeURI(asset(href))}
+        download="R26-SE-039-Research-Paper.pdf"
+        className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-brand px-7 text-[15px] font-semibold text-brand-ink motion-safe:transition-all hover:-translate-y-px hover:brightness-95"
+      >
+        <Download size={16} aria-hidden="true" />
+        Download paper
+      </a>
+    </div>
+  );
+}
+
+function DocColumn({ title, items, icon: Icon }: { title: string; items: DocumentItem[]; icon: LucideIcon }) {
+  return (
+    <li className={`${cardClass} flex flex-col`}>
+      <div className="flex items-center gap-2.5 bg-brand px-5 py-3.5 text-navy">
+        <Icon size={16} aria-hidden="true" />
+        <h4 className="text-[15px] font-bold leading-snug">{title}</h4>
+      </div>
+      <ul className="divide-y divide-white/10">
+        {items.map((d) => (
+          <DocRow key={d.id} doc={d} />
         ))}
       </ul>
-    </div>
+    </li>
   );
 }
 
@@ -164,11 +215,15 @@ export default function DocumentsSection() {
           description="Every document and slide deck of the project, downloadable as soon as it is published."
         />
 
-        <div className="mx-auto mt-12 max-w-6xl">
+        <div className="mx-auto mt-12 max-w-7xl">
           <h3 className={subheading}>Documents</h3>
           <p className="mt-2 text-center text-on-navy-muted">All documents related to this project.</p>
-          <CardGrid cards={docCards} icon={FileText} cols="lg:grid-cols-3" />
-          {finalCard && <WideCard card={finalCard} icon={FileText} />}
+          <PaperBanner doc={researchPaper} />
+          <ul className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+            {docColumns.map((c) => (
+              <DocColumn key={c.id} title={c.title} items={c.items} icon={FileText} />
+            ))}
+          </ul>
         </div>
 
         <div id="presentations" data-nav-section className="mx-auto mt-12 max-w-6xl">

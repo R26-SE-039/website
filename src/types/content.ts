@@ -47,7 +47,8 @@ export interface Milestone {
 export interface DocumentItem {
   id: string;
   title: string;
-  category: "charter" | "proposal" | "checklist" | "final";
+  category: "charter" | "proposal" | "logbook" | "checklist" | "final";
+  subtitle?: string; // small line under the title
   owner: string; // "Group" or member name
   format: "PDF" | "DOCX" | "Link";
   status: DocStatus;
